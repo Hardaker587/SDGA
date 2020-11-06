@@ -46,14 +46,14 @@ export default {
   ],
   firebase: {
     config: {
-      apiKey: process.env.apiKey,
-      authDomain: process.env.authDomain,
-      databaseURL: process.env.databaseURL,
-      projectId: process.env.projectId,
-      storageBucket: process.env.storageBucket,
-      messagingSenderId: process.env.messagingSenderId,
-      appId: process.env.appId,
-      measurementId: process.env.measurementId,
+      apiKey: "AIzaSyDsQcXzjkGjOmASG0660I-jKjb-7_cDLZU",
+      authDomain: "sdga-ce4cd.firebaseapp.com",
+      databaseURL: "https://sdga-ce4cd.firebaseio.com",
+      projectId: "sdga-ce4cd",
+      storageBucket: "sdga-ce4cd.appspot.com",
+      messagingSenderId: "269949292227",
+      appId: "1:269949292227:web:93cf43a7b6df092559dc76",
+      measurementId: "G-07E7BVZ9R6"
     },
     services: {
       auth: {

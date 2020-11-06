@@ -6,7 +6,7 @@ importScripts(
 importScripts(
   'https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js'
 )
-firebase.initializeApp({"apiKey":"\"AIzaSyDsQcXzjkGjOmASG0660I-jKjb-7_cDLZU\",","authDomain":"\"sdga-ce4cd.firebaseapp.com\",","databaseURL":"\"https:\u002F\u002Fsdga-ce4cd.firebaseio.com\",","projectId":"\"sdga-ce4cd\",","storageBucket":"\"sdga-ce4cd.appspot.com\",","messagingSenderId":"\"269949292227\",","appId":"\"1:269949292227:web:93cf43a7b6df092559dc76\",","measurementId":"G-07E7BVZ9R6"})
+firebase.initializeApp({"apiKey":"AIzaSyDsQcXzjkGjOmASG0660I-jKjb-7_cDLZU","authDomain":"sdga-ce4cd.firebaseapp.com","databaseURL":"https:\u002F\u002Fsdga-ce4cd.firebaseio.com","projectId":"sdga-ce4cd","storageBucket":"sdga-ce4cd.appspot.com","messagingSenderId":"269949292227","appId":"1:269949292227:web:93cf43a7b6df092559dc76","measurementId":"G-07E7BVZ9R6"})
 
 /**
  * Returns a promise that resolves with an ID token if available.
