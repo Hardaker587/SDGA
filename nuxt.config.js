@@ -18,9 +18,14 @@ export default {
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [],
-
+  router: {
+    middleware: ['authenticated']
+  },
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/vuex-persist', ssr: true },
+    { src: '~/plugins/utilities', ssr: true },
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -46,20 +51,28 @@ export default {
   ],
   firebase: {
     config: {
-      apiKey: "AIzaSyDsQcXzjkGjOmASG0660I-jKjb-7_cDLZU",
-      authDomain: "sdga-ce4cd.firebaseapp.com",
-      databaseURL: "https://sdga-ce4cd.firebaseio.com",
-      projectId: "sdga-ce4cd",
-      storageBucket: "sdga-ce4cd.appspot.com",
-      messagingSenderId: "269949292227",
-      appId: "1:269949292227:web:93cf43a7b6df092559dc76",
-      measurementId: "G-07E7BVZ9R6"
+      apiKey: 'AIzaSyDsQcXzjkGjOmASG0660I-jKjb-7_cDLZU',
+      authDomain: 'sdga-ce4cd.firebaseapp.com',
+      databaseURL: 'https://sdga-ce4cd.firebaseio.com',
+      projectId: 'sdga-ce4cd',
+      storageBucket: 'sdga-ce4cd.appspot.com',
+      messagingSenderId: '269949292227',
+      appId: '1:269949292227:web:93cf43a7b6df092559dc76',
+      measurementId: 'G-07E7BVZ9R6',
     },
     services: {
       auth: {
         ssr: true,
+        persistence: 'session',
+        initialize: {
+          onAuthStateChanged: 'onAuthStateChanged',
+          subscribeManually: false,
+        },
       },
       database: true,
+      functions: {
+        location: 'us-central1',
+      },
     },
   },
   pwa: {
@@ -75,7 +88,6 @@ export default {
 
   // Content module configuration (https://go.nuxtjs.dev/config-content)
   content: {},
-
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
@@ -96,5 +108,12 @@ export default {
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {},
+  build: {
+    extend(config, { isDev, isClient }) {
+      config.node = {
+        fs: 'empty',
+        child_process: 'empty',
+      }
+    },
+  },
 }

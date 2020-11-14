@@ -41,6 +41,9 @@ export default {
       return
     }
     commit('SET_AUTH_USER', { authUser })
+    this.$fire.auth.currentUser.getIdTokenResult().then((token) => {
+      console.log(token)
+    })
   },
 
   checkVuexStore(ctx) {

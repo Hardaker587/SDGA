@@ -79,6 +79,11 @@ export default {
           title: 'Inspire',
           to: '/inspire',
         },
+        {
+          icon: 'mdi-test-tube',
+          title: 'Experimental',
+          to: '/test',
+        },
       ],
       miniVariant: false,
       right: true,
