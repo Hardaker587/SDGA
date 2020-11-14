@@ -1,28 +1,19 @@
 /* eslint-disable */
-
-import 'firebase/auth'
+import firebase from 'firebase'
+require('firebase/auth')
 
 export default function ({ app, store, route, redirect }) {
   app.router.beforeEach((to, from, next) => {
-    this.$fire.auth.onAuthStateChanged((userAuth) => {
+    firebase.auth().onAuthStateChanged((userAuth) => {
       if (userAuth) {
-        this.$fire.auth.currentUser
-          .getIdTokenResult()
+        firebase
+          .auth()
+          .currentUser.getIdTokenResult()
           .then(function ({ claims }) {
-            if (claims.customer) {
-              if (to.path !== '/customer')
+            if (claims.surveyor) {
+              if (to.path !== '/survey')
                 return next({
-                  path: '/customer',
-                })
-            } else if (claims.admin) {
-              if (to.path !== '/admin')
-                return next({
-                  path: '/admin',
-                })
-            } else if (claims.subscriber) {
-              if (to.path !== '/subscriber')
-                return next({
-                  path: '/subscriber',
+                  path: '/survey',
                 })
             }
           })

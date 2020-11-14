@@ -3,35 +3,49 @@
     <v-row>
       <v-form>
         <v-text-field
-          label="Email Address"
+          v-model="login.email"
+          placeholder="Email"
           type="email"
-          :v-model="email"
+          autocomplete="username"
+          label="Email Address"
           outlined
-        ></v-text-field>
+        />
         <v-text-field
-          label="Password"
+          v-model="login.password"
+          placeholder="Password"
           type="password"
-          :v-model="password"
+          autocomplete="current-password"
+          label="Password"
           outlined
-        ></v-text-field>
+        />
+        <v-btn @click="onSubmit">Login</v-btn>
       </v-form>
     </v-row>
   </v-container>
 </template>
 
 <script>
-  import { mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
-  name: 'login',
+  name: 'Login',
   data: () => ({
-    email: '',
-    password: '',
+    login: {
+      email: '',
+      password: '',
+    },
   }),
   created() {
     this.$fire.auth.onAuthStateChanged((userAuth) => {
       if (userAuth) {
         this.$fire.auth.currentUser.getIdTokenResult().then((tokenResult) => {
           console.log('🍎 ', tokenResult.claims)
+          if (tokenResult.claims.admin) {
+            this.$router.push('/admin')
+          } else if (tokenResult.claims.surveyor) {
+            this.$router.push('/survey')
+          } else {
+            this.$router.push('/')
+          }
         })
       }
     })
@@ -39,16 +53,15 @@ export default {
 
   methods: {
     ...mapMutations({
-      setAuth: 'user/SET_AUTH_USER'
+      setAuth: 'user/SET_AUTH_USER',
     }),
     async onSubmit() {
       try {
-        const { user } = await this.$fire.auth.signInWithEmailAndPassword(
-          this.email,
-          this.password
-        ).then((r) => {
-          this.setAuth(r)
-        })
+        await this.$fire.auth
+          .signInWithEmailAndPassword(this.login.email, this.login.password)
+          .then((r) => {
+            this.setAuth(r)
+          })
       } catch (error) {
         console.log('🤡', error)
       }

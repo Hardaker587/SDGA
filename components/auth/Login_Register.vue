@@ -108,7 +108,6 @@ export default Vue.extend({
             // eslint-disable-next-line
             console.log(r)
             this.setAuth(r)
-            this.changeAuthState(r)
           })
       } catch (e) {
         alert(e)

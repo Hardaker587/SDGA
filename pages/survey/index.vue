@@ -1,9 +1,9 @@
 <template>
-  <span>reserved for admin login</span>
+  <span>text</span>
 </template>
 
 <script>
 export default {
-  name: 'login',
+  name: 'index',
 }
 </script>

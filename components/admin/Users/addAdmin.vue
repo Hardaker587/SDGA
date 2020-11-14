@@ -1,18 +1,21 @@
 <template>
   <v-container>
     <v-row>
-      <v-text-field
-        label="Email Address"
-        type="email"
-        :v-model="email"
-        outlined
-      ></v-text-field>
-      <v-text-field
-        label="Password"
-        type="password"
-        :v-model="password"
-        outlined
-      ></v-text-field>
+      <v-form>
+        <v-text-field
+          label="Email Address"
+          type="email"
+          :v-model="email"
+          outlined
+        ></v-text-field>
+        <v-text-field
+          label="Password"
+          type="password"
+          :v-model="password"
+          outlined
+        ></v-text-field>
+        <v-btn @click="onSubmit">Add new admin user</v-btn>
+      </v-form>
     </v-row>
   </v-container>
 </template>

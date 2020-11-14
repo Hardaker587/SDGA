@@ -15,7 +15,7 @@
   </v-row>
 </template>
 <script>
-import Questions from '~/components/admin/Questions'
+import Questions from '@/components/admin/Questions/Questions'
 export default {
   components: { Questions },
 }
