@@ -5,4 +5,5 @@ export default () => ({
     email: '',
     phoneNumber: '',
   },
+  admin: false,
 })

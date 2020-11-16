@@ -38,13 +38,15 @@ export default {
     this.$fire.auth.onAuthStateChanged((userAuth) => {
       if (userAuth) {
         this.$fire.auth.currentUser.getIdTokenResult().then((tokenResult) => {
-          console.log('🍎 ', tokenResult.claims)
           if (tokenResult.claims.admin) {
             this.$router.push('/admin')
+            this.setAdmin(true)
           } else if (tokenResult.claims.surveyor) {
             this.$router.push('/survey')
+            this.setAdmin(false)
           } else {
             this.$router.push('/')
+            this.setAdmin(false)
           }
         })
       }
@@ -54,6 +56,7 @@ export default {
   methods: {
     ...mapMutations({
       setAuth: 'user/SET_AUTH_USER',
+      setAdmin: 'user/SET_ADMIN',
     }),
     async onSubmit() {
       try {
@@ -63,7 +66,8 @@ export default {
             this.setAuth(r)
           })
       } catch (error) {
-        console.log('🤡', error)
+        // eslint-disable-next-line
+        console.log(error)
       }
     },
   },

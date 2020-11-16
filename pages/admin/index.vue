@@ -10,7 +10,7 @@ import 'firebase/auth'
 import 'firebase/functions'
 import Questions from '@/components/admin/Questions/Questions'
 export default {
-  name: 'index',
+  name: 'Index',
   components: { Questions },
 }
 </script>

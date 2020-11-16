@@ -1,26 +1,27 @@
 <template>
   <v-container>
     <v-form>
-      <v-text-field outlined label="Question" v-model="question"></v-text-field>
+      <v-text-field v-model="question" outlined label="Question"></v-text-field>
       <v-btn @click="writeToRealtimeDb">Add Question</v-btn>
-      <v-btn @click="newMethod">Get Question</v-btn>
     </v-form>
     <v-list dense>
       <v-subheader>Questions</v-subheader>
-      <v-text-field
-        outlined
-        :label="question.question"
-        v-for="(question, index) in questions"
-        :key="index"
-        v-model="question.question"
-        append-outer-icon="mdi-send"
-        @click:append-outer="updatequestion(index, question.question)"
-      ></v-text-field>
+      <v-form v-for="(returnedQuestion, index) in getQuestions" :key="index">
+        <v-text-field
+          v-model="returnedQuestion.question"
+          outlined
+          :label="returnedQuestion.question"
+          append-outer-icon="mdi-send"
+          @click:append-outer="updatequestion(index, returnedQuestion.question)"
+        ></v-text-field>
+      </v-form>
     </v-list>
   </v-container>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Questions',
   data() {
@@ -29,8 +30,13 @@ export default {
       questions: [],
     }
   },
+  computed: {
+    ...mapGetters({
+      getQuestions: 'questions/getQuestions',
+    }),
+  },
   mounted() {
-    this.newMethod()
+    this.$store.dispatch('questions/fetchQuestions')
   },
   methods: {
     async writeToRealtimeDb() {
@@ -80,6 +86,7 @@ export default {
         await data
           .once('value', (r) => (this.questions = r.val()))
           .then(function (snapshot) {
+            // eslint-disable-next-line
             console.log(snapshot.val())
           })
       } catch (e) {

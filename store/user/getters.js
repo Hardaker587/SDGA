@@ -8,4 +8,12 @@ export default {
       return false
     }
   },
+  isAdmin: (state) => {
+    try {
+      return state.admin
+    } catch (e) {
+      // eslint-disable-next-line
+      console.warn(e)
+    }
+  },
 }

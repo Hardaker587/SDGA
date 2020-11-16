@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'register',
+  name: 'Register',
   data: () => ({
     email: '',
     password: '',
@@ -35,7 +35,8 @@ export default {
           this.password
         )
       } catch (error) {
-        console.log('🤡', error.message)
+        // eslint-disable-next-line
+        console.warn(error.message)
       }
     },
   },

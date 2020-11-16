@@ -13,6 +13,9 @@ export default {
       phone: user.phoneNumber,
     }
   },
+  SET_ADMIN: (state, admin) => {
+    state.admin = admin
+  },
   LOG_OUT: (state) => {
     state.authUser = {
       uid: '',
@@ -20,5 +23,6 @@ export default {
       email: '',
       phoneNumber: '',
     }
+    state.admin = false
   },
 }

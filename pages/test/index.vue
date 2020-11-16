@@ -21,7 +21,7 @@ import AddUser from '@/components/admin/Users/addUser'
 import Register from '~/components/auth/register'
 import AddAdmin from '~/components/admin/Users/addAdmin'
 export default {
-  name: 'index',
+  name: 'Index',
   components: { Login, AddUser, AddAdmin, Register },
   computed: {
     ...mapGetters({

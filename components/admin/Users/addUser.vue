@@ -41,7 +41,8 @@ export default {
           this.addUser.password
         )
       } catch (error) {
-        console.log('🤡', error.message)
+        // eslint-disable-next-line
+        console.warn(error.message)
       }
     },
   },

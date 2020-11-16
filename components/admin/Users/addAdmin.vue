@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'addAdmin',
+  name: 'AddAdmin',
   data() {
     return {
       email: '',
@@ -43,14 +43,8 @@ export default {
           if (response) {
             const setAdmin = this.$fire.functions.httpsCallable('setAdmin')
             const data = { uid: response.user.uid, role: admin.role }
-            setAdmin(data).then((result) => {
-              console.log(`index.js - 183 - "🎉"`, result)
-            })
+            setAdmin(data)
           }
-        })
-        .catch((error) => {
-          // Handle Errors here.
-          console.log('🤡', error.message)
         })
     },
   },
