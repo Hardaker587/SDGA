@@ -20,18 +20,70 @@
             <v-btn dark text @click="dialog = false"> Save </v-btn>
           </v-toolbar-items>
         </v-toolbar>
+        <v-container>
+          <v-row>
+            <v-col cols="6">
+              <div class="text-h5">Add new goal</div>
+              <v-select
+                v-model="goal.sortOrder"
+                :items="goalCount"
+                label="Goal Number"
+                outlined
+              ></v-select>
+              <v-text-field
+                v-model="goal.title"
+                outlined
+                label="Goal Title"
+              ></v-text-field>
+              <v-btn @click="addNewGoal(goal)">Add Goal</v-btn>
+            </v-col>
+            <v-col cols="6">
+              <div class="text-h5">Current goals</div>
+              <v-text-field
+                :key="existingGoal.goal.index"
+                v-for="existingGoal in getGoals"
+                disabled
+                outlined
+                :label="'Goal ' + existingGoal.goal.sortOrder"
+                v-model="existingGoal.goal.title"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card>
     </v-dialog>
   </v-row>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'AddNewGoal',
   data() {
     return {
       dialog: false,
+      goal: {
+        sortOrder: '',
+        title: '',
+      },
     }
+  },
+  computed: {
+    goalCount(max) {
+      max = 17
+      return Array.from({ length: max }, (_, i) => i + 1)
+    },
+    ...mapGetters({
+      getGoals: 'questions/getGoals',
+    }),
+  },
+  mounted() {
+    this.$store.dispatch('questions/fetchGoals')
+  },
+  methods: {
+    ...mapActions({
+      addNewGoal: 'questions/newGoal',
+    }),
   },
 }
 </script>
