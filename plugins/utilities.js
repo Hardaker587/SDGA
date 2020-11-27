@@ -10,6 +10,40 @@ export default ({ _ }, inject) => {
         return v.toString(16)
       })
     },
+    sortObjects: (data, attr) => {
+      const arr = []
+      for (const prop in data) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (data.hasOwnProperty(prop)) {
+          const obj = {}
+          obj[prop] = data[prop]
+          obj.tempSortName = data[prop][attr].toLowerCase()
+          arr.push(obj)
+        }
+      }
+
+      arr.sort(function (a, b) {
+        const at = a.tempSortName
+        const bt = b.tempSortName
+        return at > bt ? 1 : at < bt ? -1 : 0
+      })
+
+      const result = []
+      for (let i = 0, l = arr.length; i < l; i++) {
+        const obj = arr[i]
+        delete obj.tempSortName
+        for (const prop in obj) {
+          // eslint-disable-next-line no-prototype-builtins
+          if (obj.hasOwnProperty(prop)) {
+            // eslint-disable-next-line no-var
+            var id = prop
+          }
+        }
+        const item = obj[id]
+        result.push(item)
+      }
+      return result
+    },
   }
   inject('utilities', utilities)
 }

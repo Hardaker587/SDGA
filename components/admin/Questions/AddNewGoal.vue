@@ -25,27 +25,27 @@
             <v-col cols="6">
               <div class="text-h5">Add new goal</div>
               <v-select
-                v-model="goal.sortOrder"
+                v-model="sortOrder"
                 :items="goalCount"
                 label="Goal Number"
                 outlined
               ></v-select>
               <v-text-field
-                v-model="goal.title"
+                v-model="title"
                 outlined
                 label="Goal Title"
               ></v-text-field>
-              <v-btn @click="addNewGoal(goal)">Add Goal</v-btn>
+              <v-btn @click="addNewGoal({ sortOrder, title })">Add Goal</v-btn>
             </v-col>
             <v-col cols="6">
               <div class="text-h5">Current goals</div>
               <v-text-field
-                :key="existingGoal.goal.index"
                 v-for="existingGoal in getGoals"
+                :key="existingGoal.index"
+                v-model="existingGoal.title"
                 disabled
                 outlined
-                :label="'Goal ' + existingGoal.goal.sortOrder"
-                v-model="existingGoal.goal.title"
+                :label="'Goal ' + existingGoal.sortOrder"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -62,10 +62,8 @@ export default {
   data() {
     return {
       dialog: false,
-      goal: {
-        sortOrder: '',
-        title: '',
-      },
+      sortOrder: '',
+      title: '',
     }
   },
   computed: {

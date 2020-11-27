@@ -11,7 +11,7 @@ export default {
     }
   },
   async fetchGoals(state) {
-    const data = this.$fire.database.ref('goal')
+    const data = this.$fire.database.ref('goal').orderByChild('sortOrder')
     try {
       await data.once('value', (r) => {
         state.commit('SET_GOALS', r.val())
@@ -38,12 +38,13 @@ export default {
       return false
     }
   },
-  async newGoal(state, goal) {
+  async newGoal(state, { sortOrder, title }) {
     const messageRef = this.$fire.database.ref('goal/' + this.$utilities.guid())
     try {
       await messageRef
         .set({
-          goal,
+          sortOrder,
+          title,
           created: new Date(),
           edited: new Date(),
         })
