@@ -44,6 +44,12 @@ export default ({ _ }, inject) => {
       }
       return result
     },
+    convertArray(obj) {
+      const arr = Object.keys(obj).map((key) => obj[key])
+      // eslint-disable-next-line
+      console.log(arr)
+      return arr
+    },
   }
   inject('utilities', utilities)
 }

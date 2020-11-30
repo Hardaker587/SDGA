@@ -75,9 +75,6 @@ export default {
       getGoals: 'questions/getGoals',
     }),
   },
-  mounted() {
-    this.$store.dispatch('questions/fetchGoals')
-  },
   methods: {
     ...mapActions({
       addNewGoal: 'questions/newGoal',

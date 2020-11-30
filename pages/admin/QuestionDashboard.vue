@@ -15,5 +15,8 @@ import AddNewGoal from '@/components/admin/Questions/AddNewGoal'
 export default {
   name: 'QuestionDashboard',
   components: { AddNewGoal, Questions, AddNewQuestion },
+  mounted() {
+    this.$store.dispatch('questions/fetchGoals')
+  },
 }
 </script>

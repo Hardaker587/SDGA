@@ -21,7 +21,7 @@ export default {
       alert(e)
     }
   },
-  async writeNewQuestions(state, question) {
+  async writeNewQuestions(state, { question, goal, sortOrder }) {
     const messageRef = this.$fire.database.ref(
       'survey/' + this.$utilities.guid()
     )
@@ -29,6 +29,8 @@ export default {
       await messageRef
         .set({
           question,
+          goal,
+          sortOrder,
           created: new Date(),
           edited: new Date(),
         })
