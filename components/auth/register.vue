@@ -2,18 +2,25 @@
   <v-container>
     <v-row>
       <v-form>
-        <v-text-field
-          label="Email Address"
-          type="email"
-          :v-model="email"
-          outlined
-        ></v-text-field>
-        <v-text-field
-          label="Password"
-          type="password"
-          :v-model="password"
-          outlined
-        ></v-text-field>
+        <v-row>
+          <v-col cols="6">
+            <v-text-field
+              label="Email Address"
+              type="email"
+              :v-model="email"
+              outlined
+            ></v-text-field
+          ></v-col>
+          <v-col cols="6">
+            <v-text-field
+              label="Password"
+              type="password"
+              :v-model="password"
+              outlined
+            ></v-text-field
+          ></v-col>
+        </v-row>
+
         <v-btn @click="onSubmit">Register</v-btn>
       </v-form>
     </v-row>

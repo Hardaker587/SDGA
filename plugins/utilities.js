@@ -50,6 +50,17 @@ export default ({ _ }, inject) => {
       console.log(arr)
       return arr
     },
+    sortKeys: (obj) => {
+      return Object.assign(
+        ...Object.entries(obj)
+          .sort()
+          .map(([key, value]) => {
+            return {
+              [key]: value,
+            }
+          })
+      )
+    },
   }
   inject('utilities', utilities)
 }

@@ -2,8 +2,9 @@
   <v-app>
     <v-main>
       <Header></Header>
-      <v-container>
+      <v-container fluid>
         <nuxt />
+        <alerts></alerts>
       </v-container>
     </v-main>
     <v-footer :absolute="!fixed" app>
@@ -14,8 +15,9 @@
 
 <script>
 import Header from '@/components/ui/header'
+import Alerts from '~/components/ui/alerts'
 export default {
-  components: { Header },
+  components: { Alerts, Header },
   data() {
     return {
       fixed: false,

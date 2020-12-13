@@ -5,4 +5,7 @@ export default {
   SET_GOALS(state, goals) {
     state.goals = goals
   },
+  SET_GOAL_CATEGORIES(state, goalCategories) {
+    state.goalCategories = goalCategories
+  },
 }

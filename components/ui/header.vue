@@ -24,12 +24,16 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar fixed app dark>
+    <v-app-bar fixed app flat color="white" class="px-4">
       <v-app-bar-nav-icon
         :v-if="isAdmin"
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-img
+        height="30px"
+        max-width="235px"
+        src="/images/branding/Sustainable_Dev.svg"
+      ></v-img>
       <v-spacer></v-spacer>
       <div v-if="isLoggedIn">
         <v-btn class="error" @click="userLogOut">Log out</v-btn>
@@ -47,6 +51,11 @@ export default {
     return {
       drawer: false,
       items: [
+        {
+          icon: 'mdi-circle-question',
+          title: 'Survey',
+          to: '/survey',
+        },
         {
           icon: 'mdi-apps',
           title: 'Dashboard',

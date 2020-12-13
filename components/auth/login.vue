@@ -2,22 +2,26 @@
   <v-container>
     <v-row>
       <v-form>
-        <v-text-field
-          v-model="login.email"
-          placeholder="Email"
-          type="email"
-          autocomplete="username"
-          label="Email Address"
-          outlined
-        />
-        <v-text-field
-          v-model="login.password"
-          placeholder="Password"
-          type="password"
-          autocomplete="current-password"
-          label="Password"
-          outlined
-        />
+        <v-row>
+          <v-col cols="6">
+            <v-text-field
+              v-model="login.email"
+              placeholder="Email"
+              type="email"
+              autocomplete="username"
+              label="Email Address"
+              outlined
+          /></v-col>
+          <v-col cols="6">
+            <v-text-field
+              v-model="login.password"
+              placeholder="Password"
+              type="password"
+              autocomplete="current-password"
+              label="Password"
+              outlined
+          /></v-col>
+        </v-row>
         <v-btn @click="onSubmit">Login</v-btn>
       </v-form>
     </v-row>
@@ -39,7 +43,7 @@ export default {
       if (userAuth) {
         this.$fire.auth.currentUser.getIdTokenResult().then((tokenResult) => {
           if (tokenResult.claims.admin) {
-            this.$router.push('/admin')
+            this.$router.push('/admin/questiondashboard')
             this.setAdmin(true)
           } else if (tokenResult.claims.surveyor) {
             this.$router.push('/survey')

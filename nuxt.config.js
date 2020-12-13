@@ -7,13 +7,13 @@ export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: '%s - SDGA',
-    title: 'SDGA',
+    title: 'Sustainable Development Goals Assessment Tool for Universities',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/images/branding/Main_logo.svg' }],
   },
   ssr: false,
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -25,6 +25,7 @@ export default {
   plugins: [
     { src: '~/plugins/vuex-persist', ssr: false },
     { src: '~/plugins/utilities', ssr: false },
+    { src: '~/plugins/alerts', ssr: false },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)

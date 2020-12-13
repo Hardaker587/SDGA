@@ -5,4 +5,7 @@ export default {
   getGoals(state) {
     return state.goals
   },
+  getGoalCategories(state) {
+    return state.goalCategories
+  },
 }

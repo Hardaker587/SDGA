@@ -8,7 +8,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on" block>
-          New question
+          New Goal Category
         </v-btn>
       </template>
       <v-card>
@@ -16,7 +16,7 @@
           <v-btn icon dark @click="dialog = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>Add New Question</v-toolbar-title>
+          <v-toolbar-title>Add New Goal Category</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark text @click="dialog = false"> Save </v-btn>
@@ -25,10 +25,11 @@
         <v-container>
           <v-row>
             <v-col cols="6">
+              <div class="text-h5">Add new goal category</div>
               <v-text-field
-                v-model="question"
-                label="Question"
+                v-model="title"
                 outlined
+                label="Category title"
               ></v-text-field>
               <v-select
                 v-model="goal"
@@ -47,25 +48,17 @@
                 </template>
               </v-select>
               <v-select
-                v-model="goalCategory"
-                label="Goal Subcategory"
-                :items="getCategoriesForGoal(goal)"
-                item-value="key"
-                item-text="title"
                 outlined
-              ></v-select>
-              <v-select
+                :items="categorySortOrder"
                 v-model="sortOrder"
                 label="Sort Order"
-                :items="questionCount"
-                outlined
               ></v-select>
-              <v-btn
-                @click="
-                  newQuestion({ question, goal, goalCategory, sortOrder })
-                "
-                >Add Question</v-btn
+              <v-btn @click="addNewGoalCategory({ sortOrder, title, goal })"
+                >Add Goal Category</v-btn
               >
+            </v-col>
+            <v-col cols="6">
+              <div class="text-h5">Current categories</div>
             </v-col>
           </v-row>
         </v-container>
@@ -75,38 +68,34 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
-  name: 'AddNewQuestion',
+  name: 'AddNewGoalCategory',
   data() {
     return {
       dialog: false,
-      question: '',
+      title: '',
       goal: '',
-      goalCategory: '',
       sortOrder: '',
     }
   },
   computed: {
-    ...mapGetters({
-      getGoals: 'questions/getGoals',
-      getCategories: 'questions/getGoalCategories',
-    }),
-    questionCount(max) {
-      max = 20
+    categorySortOrder(max) {
+      max = 17
       return Array.from({ length: max }, (_, i) => i + 1)
     },
-    itemTitle: (item) => {
-      return item.sortOrder + '. ' + item.title
-    },
+    ...mapGetters({
+      getGoals: 'questions/getGoals',
+      getGoalCategories: 'questions/getGoalCategories',
+    }),
   },
   methods: {
     ...mapActions({
-      newQuestion: 'questions/writeNewQuestions',
+      addNewGoalCategory: 'questions/newGoalCategory',
     }),
-    getCategoriesForGoal(goal) {
-      return this.getCategories.filter((c) => c.goal === goal)
-    },
   },
 }
 </script>
+
+<style scoped></style>

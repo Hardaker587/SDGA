@@ -16,4 +16,7 @@ export default {
       console.warn(e)
     }
   },
+  getUser: (state) => {
+    return state.authUser
+  },
 }
