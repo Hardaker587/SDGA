@@ -8,7 +8,7 @@
           :key="selection.value"
           :value="selection.value"
           :color="color"
-          @change="captureResponse(selection.value, questionId)"
+          @change="captureResponse({ selection, questionId })"
         >
           <template v-slot:label>
             <div class="text-caption">
@@ -25,9 +25,14 @@
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Question',
+  props: {
+    question: { type: String, required: true, default: '' },
+    questionId: { type: String, required: true, default: '' },
+    color: { type: String, required: false, default: 'primary' },
+  },
   data() {
     return {
-      radioGroup: 'X',
+      radioGroup: '',
       radioSelections: [
         { value: 'X', text: "Don't know" },
         { value: '0', text: 'None' },
@@ -38,11 +43,6 @@ export default {
       ],
       selectedOption: '',
     }
-  },
-  props: {
-    question: { type: String, required: true, default: '' },
-    questionId: { type: String, required: true, default: '' },
-    color: { type: String, required: false, default: 'primary' },
   },
   computed: {
     ...mapGetters({

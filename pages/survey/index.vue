@@ -1,5 +1,8 @@
 <template>
   <v-container fluid>
+    <v-btn block color="error" dark @click="sendResponse(getUser, getResponses)"
+      >Submit</v-btn
+    >
     <Goal
       :goals="getGoals"
       :questions="getQuestions"
@@ -9,7 +12,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Goal from '~/components/survey/Goal'
 export default {
   name: 'Index',
@@ -19,12 +22,19 @@ export default {
       getGoals: 'questions/getGoals',
       getGoalCategories: 'questions/getGoalCategories',
       getQuestions: 'questions/getQuestions',
+      getResponses: 'survey/getSurveyResponses',
+      getUser: 'user/getUser',
     }),
   },
   mounted() {
     this.$store.dispatch('questions/fetchGoals')
     this.$store.dispatch('questions/fetchQuestions')
     this.$store.dispatch('questions/fetchGoalCategories')
+  },
+  methods: {
+    ...mapActions({
+      sendResponse: 'survey/sendResponse',
+    }),
   },
 }
 </script>
