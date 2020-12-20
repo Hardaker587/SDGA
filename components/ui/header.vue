@@ -35,7 +35,7 @@
         src="/images/branding/Sustainable_Dev.svg"
       ></v-img>
       <v-spacer></v-spacer>
-      <div v-if="isLoggedIn">
+      <div>
         <v-btn class="error" @click="userLogOut">Log out</v-btn>
       </div>
     </v-app-bar>
@@ -52,7 +52,7 @@ export default {
       drawer: false,
       items: [
         {
-          icon: 'mdi-circle-question',
+          icon: 'mdi-help-circle',
           title: 'Survey',
           to: '/survey',
         },

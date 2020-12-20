@@ -14,4 +14,10 @@ export default {
       state.surveyResponses.push(responseItem)
     }
   },
+  SURVEY_RESPONSES(state, responses) {
+    state.fetchResponses = responses
+  },
+  MAP_RESPONSES(state, responses) {
+    state.mapResponses.push(...responses)
+  },
 }

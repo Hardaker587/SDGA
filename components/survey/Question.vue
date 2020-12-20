@@ -4,7 +4,7 @@
     <v-col cols="7">
       <v-radio-group v-model="radioGroup" row mandatory>
         <v-radio
-          v-for="selection in radioSelections"
+          v-for="selection in fetchPossibleSelections"
           :key="selection.value"
           :value="selection.value"
           :color="color"
@@ -33,21 +33,20 @@ export default {
   data() {
     return {
       radioGroup: '',
-      radioSelections: [
-        { value: 'X', text: "Don't know" },
-        { value: '0', text: 'None' },
-        { value: '1', text: 'A little' },
-        { value: '2', text: 'Adequate' },
-        { value: '3', text: 'Substantial' },
-        { value: '4', text: 'A great deal' },
-      ],
       selectedOption: '',
     }
   },
   computed: {
     ...mapGetters({
       getUser: 'user/getUser',
+      fetchPossibleSelections: 'survey/fetchPossibleSelections',
     }),
+  },
+  created() {
+    this.captureResponse({
+      selection: this.fetchPossibleSelections[0],
+      questionId: this.questionId,
+    })
   },
   methods: {
     ...mapActions({

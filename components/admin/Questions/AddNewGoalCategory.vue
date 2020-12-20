@@ -7,7 +7,14 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on" block>
+        <v-btn
+          color="primary"
+          dark
+          v-bind="attrs"
+          v-on="on"
+          class="text-overline"
+          block
+        >
           New Goal Category
         </v-btn>
       </template>

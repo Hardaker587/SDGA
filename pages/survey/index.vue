@@ -1,6 +1,10 @@
 <template>
   <v-container fluid>
-    <v-btn block color="error" dark @click="sendResponse(getUser, getResponses)"
+    <v-btn
+      block
+      color="error"
+      dark
+      @click="sendResponse([getUser, getSurveyResponses])"
       >Submit</v-btn
     >
     <Goal
@@ -22,7 +26,7 @@ export default {
       getGoals: 'questions/getGoals',
       getGoalCategories: 'questions/getGoalCategories',
       getQuestions: 'questions/getQuestions',
-      getResponses: 'survey/getSurveyResponses',
+      getSurveyResponses: 'survey/getSurveyResponses',
       getUser: 'user/getUser',
     }),
   },
