@@ -11,11 +11,11 @@
         <v-col align-self="end">
           <v-btn
             v-if="filters.goal !== ''"
-            class="text-overline"
+            class="text-overline float-right"
             color="error"
             dark
             @click="resetFilters"
-            >Reset Filters</v-btn
+            ><v-icon> mdi-refresh </v-icon>Reset Filters</v-btn
           >
         </v-col></v-row
       >
@@ -120,11 +120,19 @@ export default {
       const result = this.fetchMappedResponses.filter(
         (r) => r.questionId === question
       )
+      console.log(result)
       const mappedResult = result.map((s) => s.selection)
-      return this.$_.countBy(mappedResult, 'value')
+      console.log(mappedResult)
+      const calculatedResult = this.$_.countBy(mappedResult, 'text')
+      console.log(calculatedResult)
+      const exportedResult = []
+
+      exportedResult.push(Object.keys(calculatedResult))
+      exportedResult.push(Object.values(calculatedResult))
+      return exportedResult
     },
     returnLabels() {
-      return this.fetchPossibleSelections.map((r) => r.text)
+      return this.fetchPossibleSelections.map((r) => r.value)
     },
     resetFilters() {
       this.filters = {
