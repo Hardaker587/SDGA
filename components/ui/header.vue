@@ -67,6 +67,11 @@ export default {
           to: '/admin/questiondashboard',
         },
         {
+          icon: 'mdi-head-question',
+          title: 'Reports',
+          to: '/admin/reports',
+        },
+        {
           icon: 'mdi-test-tube',
           title: 'Experimental',
           to: '/test',

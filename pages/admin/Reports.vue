@@ -62,7 +62,8 @@
       {{ response.user.displayName }}
     </span>
     <bar
-      :labels="fetchPossibleSelections"
+      v-if="filters.question !== ''"
+      :labels="returnLabels()"
       :data="filterResults(filters.question)"
     />
   </div>
@@ -116,7 +117,14 @@ export default {
       return this.getQuestions.filter((q) => q.goalCategory === goalCategory)
     },
     filterResults(question) {
-      return this.fetchMappedResponses.filter((r) => r.questionId === question)
+      const result = this.fetchMappedResponses.filter(
+        (r) => r.questionId === question
+      )
+      const mappedResult = result.map((s) => s.selection)
+      return this.$_.countBy(mappedResult, 'value')
+    },
+    returnLabels() {
+      return this.fetchPossibleSelections.map((r) => r.text)
     },
     resetFilters() {
       this.filters = {

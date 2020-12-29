@@ -27,6 +27,8 @@ export default {
     { src: '~/plugins/utilities', ssr: false },
     { src: '~/plugins/alerts', ssr: false },
     { src: '~/plugins/morris', ssr: false },
+    { src: '~/plugins/underscore', ssr: false },
+    { src: '~/plugins/gcharts', ssr: false },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
