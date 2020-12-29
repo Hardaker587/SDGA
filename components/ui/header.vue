@@ -26,7 +26,7 @@
     </v-navigation-drawer>
     <v-app-bar fixed app flat color="white" class="px-4">
       <v-app-bar-nav-icon
-        :v-if="isAdmin"
+        v-if="isAdmin"
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
       <v-img
@@ -35,7 +35,11 @@
         src="/images/branding/Sustainable_Dev.svg"
       ></v-img>
       <v-spacer></v-spacer>
-      <div>
+      <div v-if="isLoggedIn">
+        <span
+          >Welcome back!
+          <span class="font-weight-bold">{{ getUser.email }}</span></span
+        >
         <v-btn class="error" @click="userLogOut">Log out</v-btn>
       </div>
     </v-app-bar>
@@ -52,14 +56,14 @@ export default {
       drawer: false,
       items: [
         {
+          icon: 'mdi-apps',
+          title: 'Dashboard - In progress',
+          to: '/admin',
+        },
+        {
           icon: 'mdi-help-circle',
           title: 'Survey',
           to: '/survey',
-        },
-        {
-          icon: 'mdi-apps',
-          title: 'Dashboard',
-          to: '/admin',
         },
         {
           icon: 'mdi-head-question',
@@ -67,14 +71,14 @@ export default {
           to: '/admin/questiondashboard',
         },
         {
-          icon: 'mdi-head-question',
+          icon: 'mdi-head-graphql',
           title: 'Reports',
           to: '/admin/reports',
         },
         {
-          icon: 'mdi-test-tube',
-          title: 'Experimental',
-          to: '/test',
+          icon: 'mdi-account',
+          title: 'Add Users',
+          to: '/admin/manageUsers',
         },
       ],
       title: 'SDGA For Universities',
@@ -84,6 +88,7 @@ export default {
     ...mapGetters({
       isLoggedIn: 'user/isLoggedIn',
       isAdmin: 'user/isAdmin',
+      getUser: 'user/getUser',
     }),
   },
   methods: {

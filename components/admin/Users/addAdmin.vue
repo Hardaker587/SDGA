@@ -3,18 +3,20 @@
     <v-row>
       <v-form>
         <v-text-field
+          v-model="adminEmail"
           label="Email Address"
           type="email"
-          :v-model="email"
           outlined
         ></v-text-field>
         <v-text-field
+          v-model="adminPassword"
           label="Password"
           type="password"
-          :v-model="password"
           outlined
         ></v-text-field>
-        <v-btn @click="onSubmit">Add new admin user</v-btn>
+        <v-btn @click="addAdmin(adminEmail, adminPassword)"
+          >Add new admin user</v-btn
+        >
       </v-form>
     </v-row>
   </v-container>
@@ -25,20 +27,23 @@ export default {
   name: 'AddAdmin',
   data() {
     return {
-      email: '',
-      password: '',
+      adminEmail: '',
+      adminPassword: '',
       user: null,
     }
   },
   methods: {
-    async onSubmit() {
+    async addAdmin(email, password) {
       const admin = {
         role: {
           admin: true,
         },
       }
       await this.$fire.auth
-        .createUserWithEmailAndPassword(this.email, this.password)
+        .createUserWithEmailAndPassword(
+          email.toString().trim(),
+          password.toString().trim()
+        )
         .then((response) => {
           if (response) {
             const setAdmin = this.$fire.functions.httpsCallable('setAdmin')
