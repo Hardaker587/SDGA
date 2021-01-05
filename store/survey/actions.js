@@ -9,9 +9,10 @@ export default {
           responses.push({
             key: response.key,
             user: response.val()[0],
-            responses: response.val()[1],
+            date: response.val()[1],
+            responses: response.val()[2],
           })
-          state.commit('MAP_RESPONSES', response.val()[1])
+          state.commit('MAP_RESPONSES', response.val()[2])
           return false
         })
         state.commit('SURVEY_RESPONSES', responses)
@@ -28,9 +29,12 @@ export default {
     const messageRef = this.$fire.database.ref(
       'surveyResponses/' + this.$utilities.guid()
     )
-    console.log([user, responses])
+    const date = new Date().toLocaleDateString()
+    const time = new Date().toLocaleTimeString()
+    const submission = { date, time }
+    console.log([user, submission, responses])
     try {
-      await messageRef.set([user, responses]).then(
+      await messageRef.set([user, submission, responses]).then(
         this.$alerts.showMessage({
           content: 'You have successfully completed the survey',
           color: 'success',

@@ -1,7 +1,7 @@
 <template>
   <v-row align="center" class="question"
-    ><v-col cols="5">{{ question }}</v-col>
-    <v-col cols="7">
+    ><v-col :cols="this.$vuetify.breakpoint.xs ? 12 : 5">{{ question }}</v-col>
+    <v-col :cols="this.$vuetify.breakpoint.xs ? 12 : 7">
       <v-radio-group v-model="radioGroup" row mandatory>
         <v-radio
           v-for="selection in fetchPossibleSelections"
@@ -44,7 +44,9 @@ export default {
   },
   created() {
     this.captureResponse({
-      selection: this.fetchPossibleSelections[0],
+      selection: this.fetchPossibleSelections[
+        Math.floor(Math.random() * this.fetchPossibleSelections.length)
+      ],
       questionId: this.questionId,
     })
   },

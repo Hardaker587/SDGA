@@ -30,13 +30,13 @@
         @click.stop="drawer = !drawer"
       ></v-app-bar-nav-icon>
       <v-img
-        height="30px"
+        :height="this.$vuetify.breakpoint.xs ? '20px' : '30px'"
         max-width="235px"
         src="/images/branding/Sustainable_Dev.svg"
       ></v-img>
       <v-spacer></v-spacer>
       <div v-if="isLoggedIn">
-        <span
+        <span v-if="$vuetify.breakpoint.mdAndUp"
           >Welcome back!
           <span class="font-weight-bold">{{ getUser.email }}</span></span
         >

@@ -55,17 +55,24 @@
           ></v-select
         ></v-col>
       </v-row>
+      <v-row>
+        <v-col cols="12">
+          There are currently
+          {{ fetchResponses.length }} captured surveys
+          <v-card class="mt-3">
+            <bar
+              v-if="filters.question !== ''"
+              :labels="returnLabels()"
+              :data="filterResults(filters.question)"
+              :chartColor="returnColor(filters.goal)"
+            />
+            <v-card-text v-else>
+              Please use the filters to view your reports by question
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
     </v-container>
-    This is the reports page, There are currently
-    {{ fetchResponses.length }} captured surveys
-    <span v-for="response in fetchResponses" :key="response">
-      {{ response.user.displayName }}
-    </span>
-    <bar
-      v-if="filters.question !== ''"
-      :labels="returnLabels()"
-      :data="filterResults(filters.question)"
-    />
   </div>
 </template>
 
@@ -110,6 +117,9 @@ export default {
         .then(this.fetchCategories())
         .then(this.fetchSurveyResponses)
     },
+    returnColor(goal) {
+      return this.getGoals.filter((g) => g.key === goal)
+    },
     filterCategories(goal) {
       return this.getGoalCategories.filter((g) => g.goal === goal)
     },
@@ -120,15 +130,13 @@ export default {
       const result = this.fetchMappedResponses.filter(
         (r) => r.questionId === question
       )
-      console.log(result)
       const mappedResult = result.map((s) => s.selection)
-      console.log(mappedResult)
       const calculatedResult = this.$_.countBy(mappedResult, 'text')
-      console.log(calculatedResult)
-      const exportedResult = []
-
-      exportedResult.push(Object.keys(calculatedResult))
-      exportedResult.push(Object.values(calculatedResult))
+      const exportedResult = Object.keys(calculatedResult).map((key) => [
+        String(key),
+        calculatedResult[key],
+      ])
+      exportedResult.unshift(['Selection', 'Total'])
       return exportedResult
     },
     returnLabels() {

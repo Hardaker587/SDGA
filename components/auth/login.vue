@@ -38,25 +38,6 @@ export default {
       password: '',
     },
   }),
-  created() {
-    this.$fire.auth.onAuthStateChanged((userAuth) => {
-      if (userAuth) {
-        this.$fire.auth.currentUser.getIdTokenResult().then((tokenResult) => {
-          if (tokenResult.claims.admin) {
-            this.$router.push('/admin/questiondashboard')
-            this.setAdmin(true)
-          } else if (tokenResult.claims.surveyor) {
-            this.$router.push('/survey')
-            this.setAdmin(false)
-          } else {
-            this.$router.push('/')
-            this.setAdmin(false)
-          }
-        })
-      }
-    })
-  },
-
   methods: {
     ...mapMutations({
       setAuth: 'user/SET_AUTH_USER',

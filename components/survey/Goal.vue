@@ -1,7 +1,13 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-item-group v-model="window" class="shrink mr-6" mandatory tag="v-flex">
+      <v-item-group
+        v-if="$vuetify.breakpoint.mdAndUp"
+        v-model="window"
+        class="shrink mr-6"
+        mandatory
+        tag="v-flex"
+      >
         <v-item
           v-for="goal in goals"
           :key="goal.key"
@@ -32,6 +38,7 @@
               <v-card-text>
                 <v-row align="center">
                   <v-img
+                    v-if="$vuetify.breakpoint.mdAndUp"
                     height="40px"
                     max-width="40px"
                     class="mr-4"
@@ -43,7 +50,12 @@
                       )
                     "
                   ></v-img>
-                  <strong class="title"
+                  <strong
+                    :class="
+                      $vuetify.breakpoint.smAndDown
+                        ? 'text-caption font-weight-bold'
+                        : 'text-title'
+                    "
                     >{{ goal.sortOrder }}. {{ goal.title }}</strong
                   >
                   <v-spacer></v-spacer>

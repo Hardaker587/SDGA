@@ -5,7 +5,7 @@ export default {
     Object.assign(state, initialState())
   },
 
-  SET_AUTH_USER: (state, { user }) => {
+  SET_AUTH_USER: (state, user) => {
     state.authUser = {
       uid: user.uid,
       displayName: user.displayName,
