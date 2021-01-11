@@ -13,7 +13,7 @@
           v-bind="attrs"
           v-on="on"
           class="text-overline"
-          block
+          width="90%"
         >
           New Goal
         </v-btn>

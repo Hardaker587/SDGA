@@ -130,4 +130,22 @@ export default {
       return false
     }
   },
+  async updateQuestion(state, { questionId, question }) {
+    console.log(questionId)
+    const updates = {}
+    updates[`/survey/${questionId}/question`] = question
+
+    const messageRef = this.$fire.database.ref().update(updates)
+    try {
+      await messageRef.then(
+        this.$alerts.showMessage({
+          content: 'Question Successfully Updated, please refresh',
+          color: 'success',
+        })
+      )
+    } catch (e) {
+      alert(e)
+      return false
+    }
+  },
 }

@@ -33,6 +33,7 @@
         :height="this.$vuetify.breakpoint.xs ? '20px' : '30px'"
         max-width="235px"
         src="/images/branding/Sustainable_Dev.svg"
+        @click="isLoggedIn ? $router.push('/survey') : $router.push('/')"
       ></v-img>
       <v-spacer></v-spacer>
       <div v-if="isLoggedIn">

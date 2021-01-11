@@ -46,17 +46,15 @@
                   >{{ category.title }}
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
-                  <v-form>
-                    <v-text-field
-                      v-for="(question, index) in getQuestionsForCategory(
-                        category.key
-                      )"
-                      :key="index"
-                      :label="'Question' + question.sortOrder"
-                      v-model="question.question"
-                      disabled
-                    ></v-text-field>
-                  </v-form>
+                  <question-field
+                    v-for="(question, index) in getQuestionsForCategory(
+                      category.key
+                    )"
+                    :key="index"
+                    :label="'Question' + question.sortOrder"
+                    :question="question.question"
+                    :question-id="question.key"
+                  />
                 </v-expansion-panel-content>
               </v-expansion-panel> </v-expansion-panels
           ></v-row>
@@ -67,8 +65,10 @@
 </template>
 
 <script>
+import QuestionField from '~/components/admin/Questions/questionField'
 export default {
   name: 'Questions',
+  components: { QuestionField },
   data() {
     return {}
   },

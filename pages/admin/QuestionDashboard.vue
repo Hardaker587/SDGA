@@ -1,14 +1,14 @@
 <template>
   <v-container fluid>
     <v-row class="ma-2" align="center">
-      <v-col
+      <v-col cols="3"
         ><span class="text-overline text-weight-bold"
           >Manage Survey:
         </span></v-col
       >
-      <v-col class="pa-1"><add-new-question></add-new-question></v-col>
-      <v-col class="pa-1"><add-new-goal></add-new-goal></v-col>
-      <v-col class="pa-1"
+      <v-col cols="3" class="pa-1"><add-new-question></add-new-question></v-col>
+      <v-col cols="3" class="pa-1"><add-new-goal></add-new-goal></v-col>
+      <v-col cols="3" class="pa-1"
         ><add-new-goal-category></add-new-goal-category
       ></v-col>
     </v-row>

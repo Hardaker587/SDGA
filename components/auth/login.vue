@@ -1,7 +1,7 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
-      <v-form>
+      <v-form style="width: 100%">
         <v-row>
           <v-col cols="6">
             <v-text-field
@@ -22,7 +22,7 @@
               outlined
           /></v-col>
         </v-row>
-        <v-btn @click="onSubmit">Login</v-btn>
+        <v-btn @click="onSubmit" color="success" block>Login</v-btn>
       </v-form>
     </v-row>
   </v-container>
