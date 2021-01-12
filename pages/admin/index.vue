@@ -1,10 +1,34 @@
 <template>
   <div class="row">
-    <v-col cols="3" v-for="(card, index) in cards" :key="index">
+    <v-col cols="3">
       <v-card>
-        <v-card-title>{{ card.name }}</v-card-title>
+        <v-card-title>Total Surveys Completed</v-card-title>
         <v-card-text class="text-h4 text-right font-weight-bold">{{
-          card.value
+          totalSubmissions
+        }}</v-card-text>
+      </v-card>
+    </v-col>
+    <v-col cols="3">
+      <v-card>
+        <v-card-title>Total Surveys Completed Today</v-card-title>
+        <v-card-text class="text-h4 text-right font-weight-bold">{{
+          todaysSubmissions
+        }}</v-card-text>
+      </v-card>
+    </v-col>
+    <v-col cols="3">
+      <v-card>
+        <v-card-title>Total Questions</v-card-title>
+        <v-card-text class="text-h4 text-right font-weight-bold">{{
+          totalQuestions
+        }}</v-card-text>
+      </v-card>
+    </v-col>
+    <v-col cols="3">
+      <v-card>
+        <v-card-title>Total Goals</v-card-title>
+        <v-card-text class="text-h4 text-right font-weight-bold">{{
+          totalGoals
         }}</v-card-text>
       </v-card>
     </v-col>
@@ -16,26 +40,43 @@ export default {
   name: 'Index',
   data() {
     return {
-      cards: [
-        { name: 'Total Surveys Completed', value: '0' },
-        { name: 'Surveys completed today', value: '0' },
-        { name: 'Total Questions', value: '0' },
-        { name: 'Total goals', value: '0' },
-      ],
+      totalSubmissions: '',
+      todaysSubmissions: '',
+      totalQuestions: '',
+      totalGoals: '',
     }
   },
   computed: {
     ...mapGetters({
       fetchResponses: 'survey/fetchResponsesFromDB',
+      getQuestions: 'questions/getQuestions',
+      getGoals: 'questions/getGoals',
     }),
   },
   mounted() {
-    this.fetchSurveyResponses()
+    this.returnSubmissions()
+    this.totalQuestions = this.getQuestions.length
+    this.totalGoals = this.getGoals.length
   },
   methods: {
     ...mapActions({
       fetchSurveyResponses: 'survey/fetchSurveyResponses',
+      fetchQuestions: 'questions/fetchQuestions',
+      fetchGoals: 'questions/fetchGoals',
     }),
+    async returnSubmissions() {
+      // eslint-disable-next-line no-unused-vars
+      const date = new Date().toLocaleDateString()
+      await this.fetchSurveyResponses().then(() => {
+        this.fetchQuestions().then(() => {
+          this.fetchGoals()
+        })
+      })
+      this.totalSubmissions = this.fetchResponses.length
+      this.todaysSubmissions = this.fetchResponses.filter(
+        (r) => r.date.date === date
+      ).length
+    },
   },
 }
 </script>

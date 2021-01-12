@@ -32,7 +32,7 @@ export default {
           .getIdTokenResult()
           .then((tokenResult) => {
             if (tokenResult.claims.admin) {
-              this.$router.push('/admin/questiondashboard')
+              this.$router.push('/admin/')
               this.setAdmin(true)
             } else if (tokenResult.claims.surveyor) {
               this.$router.push('/survey')
@@ -42,7 +42,6 @@ export default {
               this.setAdmin(false)
             }
           })
-          .then(console.log(this.$fire.auth.currentUser))
           .then(this.setAuth(this.$fire.auth.currentUser))
       }
     })
