@@ -13,6 +13,7 @@ export default {
           return false
         })
         state.commit('SET_QUESTIONS', questions)
+        console.log(r.val())
         return r.val()
       })
     } catch (e) {
@@ -33,6 +34,7 @@ export default {
           return false
         })
         state.commit('SET_GOALS', goals)
+        console.log(r.val())
         return r.val()
       })
     } catch (e) {
@@ -53,6 +55,7 @@ export default {
           return false
         })
         state.commit('SET_GOAL_CATEGORIES', goalCategories)
+        console.log(r.val())
         return r.val()
       })
     } catch (e) {
