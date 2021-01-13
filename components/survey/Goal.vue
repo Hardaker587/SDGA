@@ -68,6 +68,7 @@
                     ><v-icon>mdi-chevron-left</v-icon></v-btn
                   >
                   <v-btn
+                    v-if="window !== 16"
                     @click="window === 16 ? window-- : window++"
                     dark
                     :color="goal.color"

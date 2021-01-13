@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <v-col cols="3">
-      <v-card>
+      <v-card @click="$router.push('/admin/reports')">
         <v-card-title>Total Surveys Completed</v-card-title>
         <v-card-text class="text-h4 text-right font-weight-bold">{{
           totalSubmissions
@@ -17,7 +17,7 @@
       </v-card>
     </v-col>
     <v-col cols="3">
-      <v-card>
+      <v-card @click="$router.push('/admin/questiondashboard')">
         <v-card-title>Total Questions</v-card-title>
         <v-card-text class="text-h4 text-right font-weight-bold">{{
           totalQuestions
@@ -25,7 +25,7 @@
       </v-card>
     </v-col>
     <v-col cols="3">
-      <v-card>
+      <v-card @click="$router.push('/admin/questiondashboard')">
         <v-card-title>Total Goals</v-card-title>
         <v-card-text class="text-h4 text-right font-weight-bold">{{
           totalGoals
@@ -55,8 +55,6 @@ export default {
   },
   mounted() {
     this.returnSubmissions()
-    this.totalQuestions = this.getQuestions.length
-    this.totalGoals = this.getGoals.length
   },
   methods: {
     ...mapActions({
@@ -76,6 +74,8 @@ export default {
       this.todaysSubmissions = this.fetchResponses.filter(
         (r) => r.date.date === date
       ).length
+      this.totalQuestions = this.getQuestions.length
+      this.totalGoals = this.getGoals.length
     },
   },
 }

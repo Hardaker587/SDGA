@@ -58,11 +58,11 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Dashboard - In progress',
+          title: 'Dashboard',
           to: '/admin',
         },
         {
-          icon: 'mdi-help-circle',
+          icon: 'mdi-clipboard',
           title: 'Survey',
           to: '/survey',
         },
@@ -72,7 +72,7 @@ export default {
           to: '/admin/questiondashboard',
         },
         {
-          icon: 'mdi-head-graphql',
+          icon: 'mdi-chart-pie',
           title: 'Reports',
           to: '/admin/reports',
         },

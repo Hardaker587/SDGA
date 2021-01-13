@@ -171,6 +171,7 @@ export default {
                     color: 'success',
                   })
                 )
+                .then(this.$router.push('/survey'))
             } catch (e) {
               alert(e)
               return false

@@ -1,23 +1,25 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
-      <v-form>
-        <v-text-field
-          v-model="adminEmail"
-          label="Email Address"
-          type="email"
-          outlined
-        ></v-text-field>
-        <v-text-field
-          v-model="adminPassword"
-          label="Password"
-          type="password"
-          outlined
-        ></v-text-field>
-        <v-btn @click="addAdmin(adminEmail, adminPassword)"
-          >Add new admin user</v-btn
-        >
-      </v-form>
+      <v-col cols="12">
+        <v-form>
+          <v-text-field
+            v-model="adminEmail"
+            label="Email Address"
+            type="email"
+            outlined
+          ></v-text-field>
+          <v-text-field
+            v-model="adminPassword"
+            label="Password"
+            type="password"
+            outlined
+          ></v-text-field>
+          <v-btn @click="addAdmin(adminEmail, adminPassword)" color="success"
+            >Add new admin user</v-btn
+          >
+        </v-form>
+      </v-col>
     </v-row>
   </v-container>
 </template>

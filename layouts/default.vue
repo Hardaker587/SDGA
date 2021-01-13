@@ -32,8 +32,10 @@ export default {
           .getIdTokenResult()
           .then((tokenResult) => {
             if (tokenResult.claims.admin) {
-              this.$router.push('/admin/')
               this.setAdmin(true)
+              if (this.$route.path === '/') {
+                this.$router.push('/admin')
+              }
             } else if (tokenResult.claims.surveyor) {
               this.$router.push('/survey')
               this.setAdmin(false)
