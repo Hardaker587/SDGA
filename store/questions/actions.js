@@ -151,4 +151,13 @@ export default {
       return false
     }
   },
+  async deleteQuestion(state, questionId) {
+    const messageRef = this.$fire.database.ref(`/survey/${questionId}`).remove()
+    await messageRef.then(
+      this.$alerts.showMessage({
+        content: 'Question Successfully Removed, please refresh',
+        color: 'success',
+      })
+    )
+  },
 }

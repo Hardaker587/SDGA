@@ -9,8 +9,11 @@
       class="mr-4"
     >
     </v-text-field>
-    <v-btn fab color="grey-darken" dark @click="toggleEdit"
+    <v-btn fab color="grey-darken" dark @click="toggleEdit" class="mr-4"
       ><v-icon>{{ disabledField ? 'mdi-pencil' : 'mdi-check' }}</v-icon></v-btn
+    >
+    <v-btn fab color="red" dark @click="deleteQuestion(questionId)"
+      ><v-icon>mdi-delete</v-icon></v-btn
     >
   </v-form>
 </template>
@@ -36,6 +39,7 @@ export default {
   methods: {
     ...mapActions({
       updateQuestion: 'questions/updateQuestion',
+      deleteQuestion: 'questions/deleteQuestion',
     }),
     returnQuestion() {
       this.questionModel = this.question
