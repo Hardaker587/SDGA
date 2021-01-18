@@ -78,7 +78,7 @@ export default {
         },
         {
           icon: 'mdi-account',
-          title: 'Add Users',
+          title: 'Manage Users',
           to: '/admin/manageUsers',
         },
       ],

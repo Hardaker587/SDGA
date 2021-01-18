@@ -1,12 +1,5 @@
 <template>
   <v-container fluid>
-    <v-btn
-      block
-      color="error"
-      dark
-      @click="sendResponse([getUser, getSurveyResponses])"
-      >Submit</v-btn
-    >
     <Goal
       :goals="getGoals"
       :questions="getQuestions"

@@ -22,6 +22,7 @@
               outlined
           /></v-col>
         </v-row>
+        <ResetPassword />
         <v-btn @click="onSubmit" color="success" block>Login</v-btn>
       </v-form>
     </v-row>
@@ -30,8 +31,10 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import ResetPassword from '~/components/auth/resetPassword'
 export default {
   name: 'Login',
+  components: { ResetPassword },
   data: () => ({
     login: {
       email: '',

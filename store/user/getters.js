@@ -19,4 +19,7 @@ export default {
   getUser: (state) => {
     return state.authUser
   },
+  getUsers: (state) => {
+    return state.users
+  },
 }

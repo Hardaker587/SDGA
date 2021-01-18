@@ -53,4 +53,30 @@ export default {
       'Success. Nuxt-fire Objects can be accessed in store actions via this.$fire___'
     )
   },
+  async fetchUsers(state) {
+    const data = this.$fire.database.ref('users')
+    try {
+      await data.once('value', (r) => {
+        const users = []
+
+        r.forEach((user) => {
+          users.push({
+            uid: user.key,
+            admin: user.val().admin,
+            firstName: user.val().firstName,
+            lastName: user.val().lastName,
+            email: user.val().email,
+            dateOfBirth: user.val().dateOfBirth,
+            city: user.val().city,
+            province: user.val().province,
+            university: user.val().university,
+          })
+        })
+        state.commit('SET_USERS', users)
+        return r.val()
+      })
+    } catch (e) {
+      alert(e)
+    }
+  },
 }

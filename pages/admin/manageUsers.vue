@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col cols="12">
-        <div class="text-h5 font-weight-bold pb-2">Add new users to site</div>
+        <div class="text-h5 font-weight-bold pb-2">Manage users</div>
         <v-divider></v-divider>
       </v-col>
     </v-row>
@@ -16,14 +16,36 @@
         <add-user />
       </v-col>
     </v-row>
+    <v-row>
+      <v-col cols="12">
+        <div class="text-h5 font-weight-bold pb-2">Users</div>
+
+        <Users :users="getUsers" />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import AddAdmin from '~/components/admin/Users/addAdmin'
 import AddUser from '~/components/admin/Users/addUser'
+import Users from '~/components/admin/Users/users'
 export default {
   name: 'manageUsers',
-  components: { AddUser, AddAdmin },
+  components: { Users, AddUser, AddAdmin },
+  computed: {
+    ...mapGetters({
+      getUsers: 'user/getUsers',
+    }),
+  },
+  mounted() {
+    this.fetchUsers()
+  },
+  methods: {
+    ...mapActions({
+      fetchUsers: 'user/fetchUsers',
+    }),
+  },
 }
 </script>

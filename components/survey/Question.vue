@@ -6,7 +6,7 @@
         <v-radio
           v-for="selection in fetchPossibleSelections"
           :key="selection.value"
-          :value="selection.value"
+          :value="selection"
           :color="color"
           @change="captureResponse({ selection, questionId })"
         >
@@ -44,9 +44,7 @@ export default {
   },
   created() {
     this.captureResponse({
-      selection: this.fetchPossibleSelections[
-        Math.floor(Math.random() * this.fetchPossibleSelections.length)
-      ],
+      selection: this.fetchPossibleSelections[0],
       questionId: this.questionId,
     })
   },

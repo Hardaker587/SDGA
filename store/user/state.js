@@ -6,4 +6,5 @@ export default () => ({
     phoneNumber: '',
   },
   admin: false,
+  users: [],
 })

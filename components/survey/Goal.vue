@@ -109,6 +109,14 @@
                   </div>
                 </v-row>
                 <v-row v-else>There are no questions for this goal</v-row>
+                <v-btn
+                  v-if="window === 16"
+                  block
+                  color="success"
+                  dark
+                  @click="completeSurvey"
+                  >Complete survey</v-btn
+                >
               </v-card-text>
             </v-card>
           </v-window-item>
@@ -119,7 +127,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import Question from '~/components/survey/Question'
 export default {
   name: 'Goal',
@@ -135,9 +143,16 @@ export default {
       window: 0,
     }
   },
+  computed: {
+    ...mapGetters({
+      getSurveyResponses: 'survey/getSurveyResponses',
+      getUser: 'user/getUser',
+    }),
+  },
   methods: {
     ...mapActions({
       captureResponse: 'survey/captureResponse',
+      sendResponse: 'survey/sendResponse',
     }),
     getCategoriesForGoal(goal) {
       return this.goalCategories.filter((c) => c.goal === goal)
@@ -148,8 +163,10 @@ export default {
     parseImageSource(image, path, type) {
       return path + image + '.' + type
     },
-    sendResponse(selection, questionId) {
-      alert(selection + ' ' + questionId)
+    async completeSurvey() {
+      await this.sendResponse([this.getUser, this.getSurveyResponses]).then(
+        this.$router.push('/survey/success')
+      )
     },
   },
 }

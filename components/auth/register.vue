@@ -158,20 +158,22 @@ export default {
             try {
               messageRef
                 .set({
+                  admin: false,
                   firstName: this.firstName,
                   lastName: this.lastName,
+                  email: this.email,
                   dateOfBirth: this.dob,
                   university: this.university,
                   city: this.city,
                   province: this.province,
                 })
-                .then(
+                .then(() => {
                   this.$alerts.showMessage({
                     content: 'You have successfully registered',
                     color: 'success',
                   })
-                )
-                .then(this.$router.push('/survey'))
+                  this.$router.push('/survey')
+                })
             } catch (e) {
               alert(e)
               return false
