@@ -20,7 +20,7 @@
       <v-col cols="12">
         <div class="text-h5 font-weight-bold pb-2">Users</div>
 
-        <Users :users="getUsers" />
+        <Users :users="getUsers" :responses="getResponses" />
       </v-col>
     </v-row>
   </v-container>
@@ -37,13 +37,16 @@ export default {
   computed: {
     ...mapGetters({
       getUsers: 'user/getUsers',
+      getResponses: 'survey/fetchResponsesFromDB',
     }),
   },
   mounted() {
     this.fetchUsers()
+    this.fetchResponses()
   },
   methods: {
     ...mapActions({
+      fetchResponses: 'survey/fetchSurveyResponses',
       fetchUsers: 'user/fetchUsers',
     }),
   },

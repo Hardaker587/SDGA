@@ -48,16 +48,27 @@
             <span class="font-weight-bold">{{ user.university }}</span></v-col
           >
         </v-row>
+        <v-row>
+          <user-survey :user="user" :response="returnResponse(user)" />
+        </v-row>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
 
 <script>
+import UserSurvey from '~/components/admin/Users/userSurvey'
 export default {
   name: 'users',
+  components: { UserSurvey },
   props: {
     users: { type: [Object, Array], required: true, default: () => [] },
+    responses: { type: [Object, Array], required: true, default: () => [] },
+  },
+  methods: {
+    returnResponse(user) {
+      return this.responses.find((r) => r.user.email === user.email)
+    },
   },
 }
 </script>

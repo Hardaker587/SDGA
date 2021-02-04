@@ -135,8 +135,9 @@ export default {
       const exportedResult = Object.keys(calculatedResult).map((key) => [
         String(key),
         calculatedResult[key],
+        this.fetchPossibleSelections.find((r) => String(key) === r.text).color,
       ])
-      exportedResult.unshift(['Selection', 'Total'])
+      exportedResult.unshift(['Selection', 'Total', { role: 'style' }])
       return exportedResult
     },
     returnLabels() {
