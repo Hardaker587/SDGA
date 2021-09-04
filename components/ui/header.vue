@@ -69,7 +69,7 @@ export default {
         {
           icon: 'mdi-head-question',
           title: 'Manage Questions',
-          to: '/admin/questiondashboard',
+          to: '/admin/manageQuestions',
         },
         {
           icon: 'mdi-chart-pie',

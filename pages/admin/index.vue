@@ -20,7 +20,7 @@
         </v-card>
       </v-col>
       <v-col cols="3">
-        <v-card @click="$router.push('/admin/questiondashboard')">
+        <v-card @click="$router.push('/admin/manageQuestions')">
           <v-card-title>Total Questions</v-card-title>
           <v-card-text class="text-h4 text-right font-weight-bold">{{
             totalQuestions
@@ -28,7 +28,7 @@
         </v-card>
       </v-col>
       <v-col cols="3">
-        <v-card @click="$router.push('/admin/questiondashboard')">
+        <v-card @click="$router.push('/admin/manageQuestions')">
           <v-card-title>Total Goals</v-card-title>
           <v-card-text class="text-h4 text-right font-weight-bold">{{
             totalGoals

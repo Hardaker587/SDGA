@@ -32,7 +32,6 @@ export default {
     const date = new Date().toLocaleDateString()
     const time = new Date().toLocaleTimeString()
     const submission = { date, time }
-    console.log([user, submission, responses])
     try {
       await messageRef.set([user, submission, responses]).then(
         this.$alerts.showMessage({

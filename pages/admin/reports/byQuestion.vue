@@ -1,79 +1,77 @@
 <template>
-  <div>
-    <v-container fluid>
-      <v-row>
-        <v-col
-          ><span class="text-overline text-weight-bold"
-            >Reports Filter</span
-          ></v-col
-        >
-        <v-spacer></v-spacer>
-        <v-col align-self="end">
-          <v-btn
-            v-if="filters.goal !== ''"
-            class="text-overline float-right"
-            color="error"
-            dark
-            @click="resetFilters"
-            ><v-icon> mdi-refresh </v-icon>Reset Filters</v-btn
-          >
-        </v-col></v-row
+  <v-container fluid>
+    <v-row>
+      <v-col
+        ><span class="text-overline text-weight-bold"
+          >Reports Filter</span
+        ></v-col
       >
-      <v-row>
-        <v-col cols="4" class="goal"
-          ><v-select
-            v-model="filters.goal"
-            :items="getGoals"
-            item-text="title"
-            item-value="key"
-            label="Goal"
-            outlined
-            append-outer-icon="mdi-menu-right"
-          ></v-select
-        ></v-col>
-        <v-col cols="4" class="goalCategory"
-          ><v-select
-            v-model="filters.goalCategory"
-            :items="filterCategories(filters.goal)"
-            item-text="title"
-            item-value="key"
-            label="Goal Category"
-            outlined
-            :disabled="filters.goal === ''"
-            append-outer-icon="mdi-menu-right"
-          ></v-select
-        ></v-col>
-        <v-col cols="4" class="question"
-          ><v-select
-            v-model="filters.question"
-            :items="filterQuestions(filters.goalCategory)"
-            item-text="question"
-            item-value="key"
-            label="Question"
-            outlined
-            :disabled="filters.goalCategory === ''"
-          ></v-select
-        ></v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="12">
-          There are currently
-          {{ fetchResponses.length }} captured surveys
-          <v-card class="mt-3">
-            <bar
-              v-if="filters.question !== ''"
-              :labels="returnLabels()"
-              :data="filterResults(filters.question)"
-              :chartColor="returnColor(filters.goal)"
-            />
-            <v-card-text v-else>
-              Please use the filters to view your reports by question
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+      <v-spacer></v-spacer>
+      <v-col align-self="end">
+        <v-btn
+          v-if="filters.goal !== ''"
+          class="text-overline float-right"
+          color="error"
+          dark
+          @click="resetFilters"
+          ><v-icon> mdi-refresh </v-icon>Reset Filters</v-btn
+        >
+      </v-col></v-row
+    >
+    <v-row>
+      <v-col cols="4" class="goal"
+        ><v-select
+          v-model="filters.goal"
+          :items="getGoals"
+          item-text="title"
+          item-value="key"
+          label="Goal"
+          outlined
+          append-outer-icon="mdi-menu-right"
+        ></v-select
+      ></v-col>
+      <v-col cols="4" class="goalCategory"
+        ><v-select
+          v-model="filters.goalCategory"
+          :items="filterCategories(filters.goal)"
+          item-text="title"
+          item-value="key"
+          label="Goal Category"
+          outlined
+          :disabled="filters.goal === ''"
+          append-outer-icon="mdi-menu-right"
+        ></v-select
+      ></v-col>
+      <v-col cols="4" class="question"
+        ><v-select
+          v-model="filters.question"
+          :items="filterQuestions(filters.goalCategory)"
+          item-text="question"
+          item-value="key"
+          label="Question"
+          outlined
+          :disabled="filters.goalCategory === ''"
+        ></v-select
+      ></v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12">
+        There are currently
+        {{ fetchResponses.length }} captured surveys
+        <v-card class="mt-3">
+          <bar
+            v-if="filters.question !== ''"
+            :labels="returnLabels()"
+            :data="filterResults(filters.question)"
+            :chartColor="returnColor(filters.goal)"
+          />
+          <v-card-text v-else>
+            Please use the filters to view your reports by question
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
