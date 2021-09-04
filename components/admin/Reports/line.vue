@@ -16,21 +16,25 @@ export default {
     datasets: { type: Array, required: false, default: () => [] },
   },
   watch: {
-    datasets() {
+    datasets(oldSet, newSet) {
+      if (newSet !== oldSet && this.chart) {
+        this.chart.destroy()
+        this.generateChart()
+      }
       if (this.datasets.length) this.generateChart()
-      if (!this.datasets.length) this.chart.destroy()
+      if (!this.datasets.length && this.chart) this.chart.destroy()
     },
   },
   methods: {
     generateChart() {
       const data = {
         labels: [
-          'Dont know',
           'None',
           'A little',
           'Adequate',
           'Substantial',
           'A great deal',
+          'Dont know',
         ],
         datasets: this.datasets,
       }

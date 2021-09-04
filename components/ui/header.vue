@@ -72,9 +72,14 @@ export default {
           to: '/admin/manageQuestions',
         },
         {
-          icon: 'mdi-chart-pie',
-          title: 'Reports',
-          to: '/admin/reports',
+          icon: 'mdi-poll',
+          title: 'Single Question Report',
+          to: '/admin/reports/byQuestion',
+        },
+        {
+          icon: 'mdi-spider-web',
+          title: 'Radar Graph Report',
+          to: '/admin/reports/multipleQuestions',
         },
         {
           icon: 'mdi-account',

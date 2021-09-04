@@ -83,33 +83,41 @@ export default {
       })
     },
     createDatasets(selectedQuestions) {
-      const datasets = []
-      selectedQuestions.forEach((selectedQuestion) => {
-        const color = this.randomColor()
-        const out = {
-          label: selectedQuestion.question,
-          fill: true,
-          backgroundColor: `rgba(${color.r},${color.g}, ${color.b}, 0.2)`,
-          borderColor: `rgb(${color.r},${color.g}, ${color.b})`,
-          pointBackgroundColor: `rgb(${color.r},${color.g}, ${color.b})`,
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: `rgb(${color.r},${color.g}, ${color.b})`,
-        }
-        const selections = [...this.fetchPossibleSelections]
-        const result = this.fetchMappedResponses.filter(
-          (r) => r.questionId === selectedQuestion.key
-        )
-        const mappedResult = result.map((s) => s.selection)
-        const calculatedResult = this.$_.countBy(mappedResult, 'value')
-        console.log(calculatedResult)
-        const exportedResult = Object.keys(calculatedResult).map(
-          (key) => calculatedResult[key]
-        )
-        out.data = exportedResult
-        datasets.push(out)
-      })
-      this.dataSets = datasets
+      try {
+        const datasets = []
+        selectedQuestions.forEach((selectedQuestion) => {
+          const color = this.randomColor()
+          const out = {
+            label: selectedQuestion.question,
+            fill: true,
+            backgroundColor: `rgba(${color.r},${color.g}, ${color.b}, 0.2)`,
+            borderColor: `rgb(${color.r},${color.g}, ${color.b})`,
+            pointBackgroundColor: `rgb(${color.r},${color.g}, ${color.b})`,
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: `rgb(${color.r},${color.g}, ${color.b})`,
+          }
+          const selections = [...this.fetchPossibleSelections]
+          const result = this.fetchMappedResponses.filter(
+            (r) => r.questionId === selectedQuestion.key
+          )
+          const grouped = this.$_.groupBy(result, (res) => {
+            return res.selection.value
+          })
+          console.log(grouped)
+          selections.map((selection) => {
+            console.log(selection.value)
+            selection.count = grouped[selection.value]
+              ? grouped[selection.value].length || 0
+              : 0
+          })
+          out.data = selections.map((select) => select.count)
+          datasets.push(out)
+        })
+        this.dataSets = datasets
+      } catch (e) {
+        console.error(e)
+      }
     },
     random(number) {
       return Math.floor(Math.random() * number)
