@@ -1,6 +1,11 @@
 <template>
   <div style="height: 90vh; position: relative">
-    <canvas id="lineChart" />
+    <canvas v-show="datasets.length" id="lineChart" />
+    <div v-if="!datasets.length">
+      <v-alert text outlined color="deep-orange" icon="mdi-alert-circle">
+        Please select at least 1 (one) question to display chart
+      </v-alert>
+    </div>
   </div>
 </template>
 
