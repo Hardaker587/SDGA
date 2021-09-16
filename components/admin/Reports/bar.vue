@@ -1,5 +1,6 @@
 <template>
   <v-container fluid>
+    <div v-if="title" class="font-weight-black">{{ title }}</div>
     <div class="text-caption">
       Reports are displayed as totals by question.
       <span class="font-weight-bold"
@@ -15,6 +16,7 @@ import { GChart } from 'vue-google-charts'
 export default {
   components: { GChart },
   props: {
+    title: { type: String, requires: false, default: '' },
     data: { type: [Object, Array], required: false, default: () => [] },
     horizontalKey: { type: String, default: '' },
     verticalKey: { type: String, default: '' },

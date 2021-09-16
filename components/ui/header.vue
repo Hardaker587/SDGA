@@ -82,6 +82,11 @@ export default {
           to: '/admin/reports/multipleQuestions',
         },
         {
+          icon: 'mdi-compare',
+          title: 'Compare questions Report',
+          to: '/admin/reports/compareQuestions',
+        },
+        {
           icon: 'mdi-account',
           title: 'Manage Users',
           to: '/admin/manageUsers',

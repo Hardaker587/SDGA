@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="4" class="fixed">
         <v-treeview
-          v-model="selection"
+          v-model="selections"
           class="text-caption"
           dense
           selectable
@@ -13,8 +13,20 @@
           return-object
         ></v-treeview>
       </v-col>
-      <v-col cols="8">
-        <line-chart v-if="dataSets" :labels="labels" :datasets="dataSets" />
+      <v-col v-if="selections.length" cols="8">
+        <bar
+          v-for="(selection, index) in selections"
+          :key="index"
+          :title="selection.title"
+          :labels="returnLabels()"
+          :data="filterResults(selection.key)"
+          :chartColor="returnColor(selection.goal)"
+        />
+      </v-col>
+      <v-col v-if="!selections.length" cols="8">
+        <v-alert text outlined color="deep-orange" icon="mdi-alert-circle">
+          Please select at least 1 (one) question to display chart
+        </v-alert>
       </v-col>
     </v-row>
   </v-container>
@@ -22,16 +34,16 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import lineChart from '~/components/admin/Reports/line'
+import Bar from '~/components/admin/Reports/bar'
 export default {
-  name: 'multipleQuestions',
-  components: { lineChart },
+  name: 'compareQuestions',
   data: () => ({
     labels: [],
     items: [],
-    selection: [],
+    selections: [],
     dataSets: [],
   }),
+  components: { Bar },
   computed: {
     ...mapGetters({
       fetchResponses: 'survey/fetchResponsesFromDB',
@@ -41,11 +53,6 @@ export default {
       getGoals: 'questions/getGoals',
       getGoalCategories: 'questions/getGoalCategories',
     }),
-  },
-  watch: {
-    selection(selections) {
-      this.createDatasets(selections)
-    },
   },
   mounted() {
     this.getInformation()
@@ -82,48 +89,38 @@ export default {
         this.items = output
       })
     },
-    createDatasets(selectedQuestions) {
-      try {
-        const datasets = []
-        selectedQuestions.forEach((selectedQuestion) => {
-          const color = this.randomColor()
-          const out = {
-            label: selectedQuestion.question,
-            fill: true,
-            backgroundColor: `rgba(${color.r},${color.g}, ${color.b}, 0.2)`,
-            borderColor: `rgb(${color.r},${color.g}, ${color.b})`,
-            pointBackgroundColor: `rgb(${color.r},${color.g}, ${color.b})`,
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: `rgb(${color.r},${color.g}, ${color.b})`,
-          }
-          const selections = [...this.fetchPossibleSelections]
-          const result = this.fetchMappedResponses.filter(
-            (r) => r.questionId === selectedQuestion.key
-          )
-          const grouped = this.$_.groupBy(result, (res) => {
-            return res.selection.value
-          })
-          console.log(grouped)
-          selections.map((selection) => {
-            console.log(selection.value)
-            selection.count = grouped[selection.value]
-              ? grouped[selection.value].length || 0
-              : 0
-          })
-          out.data = selections.map((select) => select.count)
-          datasets.push(out)
-        })
-        this.dataSets = datasets
-      } catch (e) {
-        console.error(e)
+    returnColor(goal) {
+      return this.getGoals.filter((g) => g.key === goal)
+    },
+    filterCategories(goal) {
+      return this.getGoalCategories.filter((g) => g.goal === goal)
+    },
+    filterQuestions(goalCategory) {
+      return this.getQuestions.filter((q) => q.goalCategory === goalCategory)
+    },
+    filterResults(question) {
+      const result = this.fetchMappedResponses.filter(
+        (r) => r.questionId === question
+      )
+      const mappedResult = result.map((s) => s.selection)
+      const calculatedResult = this.$_.countBy(mappedResult, 'text')
+      const exportedResult = Object.keys(calculatedResult).map((key) => [
+        String(key),
+        calculatedResult[key],
+        this.fetchPossibleSelections.find((r) => String(key) === r.text).color,
+      ])
+      exportedResult.unshift(['Selection', 'Total', { role: 'style' }])
+      return exportedResult
+    },
+    returnLabels() {
+      return this.fetchPossibleSelections.map((r) => r.value)
+    },
+    resetFilters() {
+      this.filters = {
+        goal: '',
+        goalCategory: '',
+        question: '',
       }
-    },
-    random(number) {
-      return Math.floor(Math.random() * number)
-    },
-    randomColor() {
-      return { r: this.random(255), g: this.random(255), b: this.random(255) }
     },
   },
 }
