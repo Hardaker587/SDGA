@@ -51,12 +51,16 @@ export default {
   mounted() {
     this.getInformation()
   },
+  beforeDestroy() {
+    this.clearResponses()
+  },
   methods: {
     ...mapActions({
       fetchQuestions: 'questions/fetchQuestions',
       fetchGoals: 'questions/fetchGoals',
       fetchCategories: 'questions/fetchGoalCategories',
       fetchSurveyResponses: 'survey/fetchSurveyResponses',
+      clearResponses: 'survey/clearResponses',
     }),
     getInformation() {
       this.fetchQuestions()
@@ -84,15 +88,18 @@ export default {
       })
     },
     generateData() {
+      const dataset = []
       this.goals.forEach((goal) => {
-        const output = this.$data_service.generateORM(
+        const output = this.$data_service.GoalData(
           goal.key,
           this.getGoals,
           this.getGoalCategories,
-          this.getQuestions
+          this.getQuestions,
+          this.fetchMappedResponses
         )
-        console.log(output)
+        dataset.push(output)
       })
+      this.dataSets = dataset
     },
   },
 }

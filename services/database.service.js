@@ -1,10 +1,13 @@
+import firebase from 'firebase'
+
 export class DatabaseService {
   constructor(firebase) {
-    this.firebase = firebase
+    this.firebase = firebase.database.Database
   }
 
-  async fetchData(reference, callback) {
-    const config = this.firebase.database.ref(reference)
+  async fetchData(reference) {
+    console.log(firebase)
+    const config = this.firebase.ref(reference)
     try {
       await config.once('value', (r) => {
         return r.val()

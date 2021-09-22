@@ -16,11 +16,13 @@ export default {
           return false
         })
         state.commit('SURVEY_RESPONSES', responses)
-        return r.val()
       })
     } catch (e) {
       alert(e)
     }
+  },
+  clearResponses(state) {
+    state.commit('CLEAR_RESPONSES')
   },
   captureResponse(state, response) {
     state.commit('ADD_TO_RESPONSE', response)

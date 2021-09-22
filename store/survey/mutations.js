@@ -20,4 +20,8 @@ export default {
   MAP_RESPONSES(state, responses) {
     state.mapResponses.push(...responses)
   },
+  CLEAR_RESPONSES(state) {
+    state.fetchResponses = []
+    state.mapResponses = []
+  },
 }
