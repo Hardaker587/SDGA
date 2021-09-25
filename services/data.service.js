@@ -2,6 +2,42 @@ export class DataService {
   // eslint-disable-next-line no-useless-constructor
   constructor() {}
   /**
+   * Groups data based on key provided
+   * @param {array} ObjectArray - Array of objects that needs to be grouped.
+   * @param {string} Property - Property to group array on.
+   * @returns {object} - Returns an object containing the filtered results of the above params
+   */
+  GroupBy(ObjectArray, Property) {
+    return ObjectArray.reduce(function (accumulator, currentObject) {
+      const key = currentObject[Property]
+      if (!accumulator[key]) {
+        accumulator[key] = []
+      }
+      accumulator[key].push(currentObject)
+      return accumulator
+    }, {})
+  }
+
+  /**
+   * Groups data based on nested key provided
+   * @param {array} ObjectArray - Array of objects that needs to be grouped.
+   * @param {string} Property - Nested Property to group array on.
+   * @returns {object} - Returns an object containing the filtered results of the above params
+   */
+  NestedGroupBy(ObjectArray, Property) {
+    const hash = {}
+    const props = Property.split('.')
+    for (let i = 0; i < ObjectArray.length; i++) {
+      const key = props.reduce(function (acc, prop) {
+        return acc && acc[prop]
+      }, ObjectArray[i])
+      if (!hash[key]) hash[key] = []
+      hash[key].push(ObjectArray[i])
+    }
+    return hash
+  }
+
+  /**
    * Generates an object output based on data provided
    * @param {string} goalId - GUID of goal being referenced.
    * @param {array} goals - Pass all goals in and filter.
@@ -23,6 +59,10 @@ export class DataService {
     goalCategories.forEach((gc) => {
       gc.questions.forEach((gcq) => {
         gcq.responses = responses.filter((r) => r.questionId === gcq.key)
+        gcq.responseTypeTotals = this.NestedGroupBy(
+          gcq.responses,
+          'selection.value'
+        )
       })
     })
     /* Get questions for goal */
