@@ -47,7 +47,9 @@ export class DataService {
    * @returns {object} - Returns an object containing the filtered results of the above params
    */
   GoalData(goalId, goals, categories, questions, responses) {
+    /* Filter out the goal */
     const goal = goals.find((goal) => goal.key === goalId)
+    /* Filter out the goal categories */
     const goalCategories = categories.filter(
       (category) => category.goal === goalId
     )
@@ -55,15 +57,21 @@ export class DataService {
     goalCategories.forEach((gc) => {
       gc.questions = questions.filter((q) => q.goalCategory === gc.key)
     })
-    /* Add responses to questions in categories */
+    /* Add responses to questions in categories, as well as their grouped types */
     goalCategories.forEach((gc) => {
+      gc.responses = []
       gc.questions.forEach((gcq) => {
         gcq.responses = responses.filter((r) => r.questionId === gcq.key)
+        gc.responses.push(...responses.filter((r) => r.questionId === gcq.key))
         gcq.responseTypeTotals = this.NestedGroupBy(
           gcq.responses,
           'selection.value'
         )
       })
+      gc.responseTypeTotals = this.NestedGroupBy(
+        gc.responses,
+        'selection.value'
+      )
     })
     /* Get questions for goal */
     const goalQuestions = questions.filter(
@@ -81,6 +89,11 @@ export class DataService {
       )
       goalResponses.push(...questionResponses)
     })
+    /* Generate group totals for response types */
+    const responseTypeTotals = this.NestedGroupBy(
+      goalResponses,
+      'selection.value'
+    )
 
     return {
       goalId,
@@ -88,6 +101,7 @@ export class DataService {
       categories: goalCategories,
       questions: goalQuestions,
       responses: goalResponses,
+      responseTypeTotals,
     }
   }
 
