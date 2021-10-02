@@ -29,6 +29,15 @@ export class ChartService {
     }
   }
 
+  colorSet(iterations, opacity) {
+    const colors = []
+    for (let i = 0; i < iterations; i++) {
+      const color = this.randomColor(opacity || null)
+      colors.push(`rgba(${color.r},${color.g},${color.b},${color.a})`)
+    }
+    return colors
+  }
+
   /**
    * Generate the chart based on specific parameters
    * @param {array} datasets - datasets used for chart, will have conditions
@@ -79,6 +88,10 @@ export class ChartService {
     })
   }
 
+  destoryChart(chart) {
+    chart.destroy()
+  }
+
   /**
    * Generates config for line chart
    * @param {array} datasets - datasets used for chart, will have conditions
@@ -94,7 +107,7 @@ export class ChartService {
           label: 'My First Dataset',
           data: datasets,
           fill: true,
-          borderColor: this.randomColor(),
+          borderColor: this.colorSet(1),
           tension: 0.1,
         },
       ],
@@ -118,7 +131,7 @@ export class ChartService {
           label: 'My First Dataset',
           data: datasets,
           fill: true,
-          borderColor: this.randomColor(),
+          backgroundColor: this.colorSet(datasets.length),
           tension: 0.1,
         },
       ],

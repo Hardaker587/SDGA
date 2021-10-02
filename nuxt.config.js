@@ -36,6 +36,7 @@ export default {
     { src: '~/plugins/underscore', ssr: false },
     { src: '~/plugins/gcharts', ssr: false },
     { src: '~/plugins/data.service.plugin', ssr: false },
+    { src: '~/plugins/chart.service.plugin', ssr: false },
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
