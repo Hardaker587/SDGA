@@ -38,6 +38,19 @@ export class DataService {
   }
 
   /**
+   * Generates counts based on object of arrays passed in
+   * @param {object} ObjectArray Object of arrays
+   * @returns {array} Array of objects with key and totals
+   */
+  ObjectArrayTotals(ObjectArray) {
+    const output = []
+    Object.entries(ObjectArray).forEach(([key, value]) => {
+      output.push({ key, total: value.length })
+    })
+    return output
+  }
+
+  /**
    * Generates an object output based on data provided
    * @param {string} goalId - GUID of goal being referenced.
    * @param {array} goals - Pass all goals in and filter.
@@ -121,5 +134,18 @@ export class DataService {
       question,
       responses: questionResponses,
     }
+  }
+
+  /**
+   * Generates object of arrays of selection groups
+   * @param {array} Responses
+   * @param {string} GroupingProperty
+   * @param {boolean} [returnTotals] - Determines whether or not the total counts should be returned or not
+   * @returns {object} Object of arrays containing total counts by common denominator
+   */
+  SelectionGroup(Responses, GroupingProperty, returnTotals) {
+    return returnTotals
+      ? this.ObjectArrayTotals(this.NestedGroupBy(Responses, GroupingProperty))
+      : this.NestedGroupBy(Responses, GroupingProperty)
   }
 }
