@@ -78,6 +78,11 @@ export default {
           to: '/admin/reports/byQuestion',
         },
         {
+          icon: 'mdi-home-analytics',
+          title: 'Reports',
+          to: '/admin/reports',
+        },
+        {
           icon: 'mdi-spider-web',
           title: 'Radar Graph Report',
           to: '/admin/reports/multipleQuestions',

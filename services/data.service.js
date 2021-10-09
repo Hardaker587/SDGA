@@ -1,6 +1,10 @@
 export class DataService {
-  // eslint-disable-next-line no-useless-constructor
-  constructor() {}
+  constructor(store) {
+    this.store = store
+  }
+
+  // Note: need to create group services i.e return totals by goal, totals by category etc
+
   /**
    * Groups data based on key provided
    * @param {array} ObjectArray - Array of objects that needs to be grouped.
@@ -103,11 +107,14 @@ export class DataService {
       goalResponses.push(...questionResponses)
     })
     /* Generate group totals for response types */
-    const responseTypeTotals = this.NestedGroupBy(
+    let responseTypeTotals = this.NestedGroupBy(
       goalResponses,
       'selection.value'
     )
-
+    console.log(responseTypeTotals)
+    responseTypeTotals = Object.entries(responseTypeTotals).map(
+      ([key, response]) => response.length
+    )
     return {
       goalId,
       goal,

@@ -151,14 +151,22 @@ export class ChartService {
       type: 'radar',
     }
     const data = {
+      labels: [
+        "Don't know",
+        'None',
+        'A little',
+        'Adequate',
+        'Substantial',
+        'A great deal',
+      ],
       datasets: [],
     }
-    datasets.forEach((dataset) => {
+    datasets.forEach((dataset, index) => {
       data.datasets.push({
-        label: 'My First Dataset',
+        label: 'My Dataset ' + index,
         data: dataset,
         fill: true,
-        backgroundColor: this.colorSet(datasets.length),
+        backgroundColor: this.colorSet(datasets.length, 0.4),
         tension: 0.1,
       })
     })
@@ -171,19 +179,97 @@ export class ChartService {
    * @param {array} datasets - datasets used for chart, will have conditions
    * @param {object} options - any valid options for your chart type
    */
-  doughnut(datasets, options) {}
+  doughnut(datasets, options) {
+    const config = {
+      type: 'doughnut',
+    }
+    const data = {
+      labels: [
+        "Don't know",
+        'None',
+        'A little',
+        'Adequate',
+        'Substantial',
+        'A great deal',
+      ],
+      datasets: [],
+    }
+    datasets.forEach((dataset, index) => {
+      data.datasets.push({
+        label: 'My Dataset ' + index,
+        data: dataset,
+        fill: true,
+        backgroundColor: this.colorSet(datasets.length),
+        tension: 0.1,
+      })
+    })
+
+    return { config, data, options }
+  }
 
   /**
    * Generates config for pie chart
    * @param {array} datasets - datasets used for chart, will have conditions
    * @param {object} options - any valid options for your chart type
    */
-  pie(datasets, options) {}
+  pie(datasets, options) {
+    const config = {
+      type: 'pie',
+    }
+    const data = {
+      labels: [
+        "Don't know",
+        'None',
+        'A little',
+        'Adequate',
+        'Substantial',
+        'A great deal',
+      ],
+      datasets: [],
+    }
+    datasets.forEach((dataset, index) => {
+      data.datasets.push({
+        label: 'My Dataset ' + index,
+        data: dataset,
+        fill: true,
+        backgroundColor: this.colorSet(datasets.length),
+        tension: 0.1,
+      })
+    })
+
+    return { config, data, options }
+  }
 
   /**
    * Generates config for polar area chart
    * @param {array} datasets - datasets used for chart, will have conditions
    * @param {object} options - any valid options for your chart type
    */
-  polar(datasets, options) {}
+  polar(datasets, options) {
+    const config = {
+      type: 'polarArea',
+    }
+    const data = {
+      labels: [
+        "Don't know",
+        'None',
+        'A little',
+        'Adequate',
+        'Substantial',
+        'A great deal',
+      ],
+      datasets: [],
+    }
+    datasets.forEach((dataset, index) => {
+      data.datasets.push({
+        label: 'My Dataset ' + index,
+        data: dataset,
+        fill: true,
+        backgroundColor: this.colorSet(datasets.length),
+        tension: 0.1,
+      })
+    })
+
+    return { config, data, options }
+  }
 }

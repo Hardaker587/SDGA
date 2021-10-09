@@ -16,7 +16,7 @@
         against {{ chartData }}</v-col
       >
     </v-row>
-    <v-row v-if="renderGoals && getGoals && getGoals.length">
+    <v-row v-if="renderGoals && getGoals && getGoals.length && !generatedChart">
       <v-list-item-group v-model="goals" multiple active-class="">
         <v-list-item v-for="goal in getGoals" :key="goal.id" :value="goal">
           <template v-slot:default="{ active }">
@@ -124,28 +124,54 @@ export default {
       }
       return chartData
     },
+    renderAllResponses() {
+      return (
+        (+this.selectedChart === chartType.BAR &&
+          +this.selectedData === barData.ALL_RESPONSES) ||
+        (+this.selectedChart === chartType.LINE &&
+          +this.selectedData === lineData.ALL_RESPONSES) ||
+        (+this.selectedChart === chartType.DOUGHNUT &&
+          +this.selectedData === doughNutData.ALL_RESPONSES) ||
+        (+this.selectedChart === chartType.PIE &&
+          +this.selectedData === pieData.ALL_RESPONSES) ||
+        (+this.selectedChart === chartType.POLAR &&
+          +this.selectedData === polarData.ALL_RESPONSES)
+      )
+    },
     renderGoals() {
       return (
-        +this.selectedData === radarData.GOALS ||
-        +this.selectedData === doughNutData.GOALS ||
-        +this.selectedData === pieData.GOALS ||
-        +this.selectedData === polarData.GOALS
+        (+this.selectedChart === chartType.RADAR &&
+          +this.selectedData === radarData.GOALS) ||
+        (+this.selectedChart === chartType.DOUGHNUT &&
+          +this.selectedData === doughNutData.GOALS) ||
+        (+this.selectedChart === chartType.PIE &&
+          +this.selectedData === pieData.GOALS) ||
+        (+this.selectedChart === chartType.POLAR &&
+          +this.selectedData === polarData.GOALS)
       )
     },
     renderCategories() {
       return (
-        +this.selectedData === radarData.CATEGORIES ||
-        +this.selectedData === doughNutData.CATEGORIES ||
-        +this.selectedData === pieData.CATEGORIES ||
-        +this.selectedData === polarData.CATEGORIES
+        (+this.selectedChart === chartType.RADAR &&
+          +this.selectedData === radarData.CATEGORIES) ||
+        (+this.selectedChart === chartType.DOUGHNUT &&
+          +this.selectedData === doughNutData.CATEGORIES) ||
+        (+this.selectedChart === chartType.PIE &&
+          +this.selectedData === pieData.CATEGORIES) ||
+        (+this.selectedChart === chartType.POLAR &&
+          +this.selectedData === polarData.CATEGORIES)
       )
     },
     renderQuestions() {
       return (
-        +this.selectedData === radarData.QUESTIONS ||
-        +this.selectedData === doughNutData.QUESTIONS ||
-        +this.selectedData === pieData.QUESTIONS ||
-        +this.selectedData === polarData.QUESTIONS
+        (+this.selectedChart === chartType.RADAR &&
+          +this.selectedData === radarData.QUESTIONS) ||
+        (+this.selectedChart === chartType.DOUGHNUT &&
+          +this.selectedData === doughNutData.QUESTIONS) ||
+        (+this.selectedChart === chartType.PIE &&
+          +this.selectedData === pieData.QUESTIONS) ||
+        (+this.selectedChart === chartType.POLAR &&
+          +this.selectedData === polarData.QUESTIONS)
       )
     },
   },
@@ -157,29 +183,26 @@ export default {
   methods: {
     generatedChartData() {
       let output = []
-      if (
-        +this.selectedData === barData.ALL_RESPONSES ||
-        +this.selectedData === lineData.ALL_RESPONSES
-      ) {
+      if (this.renderAllResponses) {
         output = this.$data_service.SelectionGroup(
           this.fetchMappedResponses,
           'selection.text',
           true
         )
       }
-      if (+this.selectedData === radarData.GOALS) {
+      if (this.renderGoals) {
         if (!this.goals || this.goals.length < 2) return
         if (this.goals && this.goals.length >= 2) {
           console.log('dafuq')
           this.error = false
           this.goals.forEach((goal) => {
             const returnOutput = this.$data_service.GoalData(
-              goal.id,
+              goal.key,
               this.getGoals,
               this.getGoalCategories,
               this.getQuestions,
               this.fetchMappedResponses
-            )
+            ).responseTypeTotals
             output.push(returnOutput)
           })
         }
@@ -193,6 +216,8 @@ export default {
         typeof this.generatedChartData() === 'undefined'
       )
         return
+      if (this.generatedChart)
+        this.$chart_service.destoryChart(this.generatedChart)
       this.generatedChart = this.$chart_service.generateChart(
         this.generatedChartData(),
         chartType[this.chart],
