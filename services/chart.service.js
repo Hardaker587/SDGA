@@ -49,6 +49,7 @@ export class ChartService {
     let config = {}
     let data = {}
     let options = {}
+    console.log(datasets, chart_type, chart_options, element)
     switch (chart_type) {
       case this.chart_type.LINE:
         config = this.line(datasets, chart_options).config
@@ -145,7 +146,25 @@ export class ChartService {
    * @param {array} datasets - datasets used for chart, will have conditions
    * @param {object} options - any valid options for your chart type
    */
-  radar(datasets, options) {}
+  radar(datasets, options) {
+    const config = {
+      type: 'radar',
+    }
+    const data = {
+      datasets: [],
+    }
+    datasets.forEach((dataset) => {
+      data.datasets.push({
+        label: 'My First Dataset',
+        data: dataset,
+        fill: true,
+        backgroundColor: this.colorSet(datasets.length),
+        tension: 0.1,
+      })
+    })
+
+    return { config, data, options }
+  }
 
   /**
    * Generates config for doughnut chart

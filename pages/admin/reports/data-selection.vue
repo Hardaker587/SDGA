@@ -1,12 +1,21 @@
 <template>
   <v-container fluid>
     <v-row no-gutters>
-      <v-col cols="12" class="text-h5 font-weight-bold mb-0"
+      <v-col cols="6" class="text-h5 font-weight-bold mb-0"
         >Select data to provision</v-col
       >
+      <v-col
+        cols="6"
+        class="mb-0 text-right"
+        @click="$router.push('/admin/reports')"
+      >
+        <v-btn small fab dark><v-icon>mdi-chevron-left</v-icon></v-btn>
+        Choose new chart</v-col
+      >
       <v-col cols="12"
-        >The data you select here will determine how your {{ chart }} chart will
-        be rendered</v-col
+        >The data you select here will determine how your
+        <span class="font-weight-black">{{ chart }}</span> chart will be
+        rendered</v-col
       >
     </v-row>
     <v-row>
