@@ -111,7 +111,6 @@ export class DataService {
       goalResponses,
       'selection.value'
     )
-    console.log(responseTypeTotals)
     responseTypeTotals = Object.entries(responseTypeTotals).map(
       ([key, response]) => response.length
     )
@@ -125,6 +124,35 @@ export class DataService {
     }
   }
 
+  CategoryData(categoryId, categories, questions, responses) {
+    const category = categories.find((category) => category.key === categoryId)
+    const categoryQuestions = questions.filter(
+      (question) => question.goalCategory === categoryId
+    )
+    const categoryResponses = []
+    categoryQuestions.forEach((cq) => {
+      const cqResponses = responses.filter((r) => {
+        return r.questionId === cq.key
+      })
+      categoryResponses.push(...cqResponses)
+    })
+
+    let responseTypeTotals = this.NestedGroupBy(
+      categoryResponses,
+      'selection.value'
+    )
+    responseTypeTotals = Object.entries(responseTypeTotals).map(
+      ([key, response]) => response.length
+    )
+
+    return {
+      category,
+      categoryQuestions,
+      categoryResponses,
+      responseTypeTotals,
+    }
+  }
+
   /**
    * Generates an object output based on data provided
    * @param {string} questionId - GUID of question being referenced.
@@ -134,12 +162,23 @@ export class DataService {
    */
   QuestionData(questionId, questions, responses) {
     const question = questions.find((q) => q.key === questionId)
-    const questionResponses = responses.filter((r) => r.question === questionId)
+    const questionResponses = responses.filter(
+      (r) => r.questionId === questionId
+    )
+
+    let responseTypeTotals = this.NestedGroupBy(
+      questionResponses,
+      'selection.value'
+    )
+    responseTypeTotals = Object.entries(responseTypeTotals).map(
+      ([key, response]) => response.length
+    )
 
     return {
       questionId,
       question,
       responses: questionResponses,
+      responseTypeTotals,
     }
   }
 

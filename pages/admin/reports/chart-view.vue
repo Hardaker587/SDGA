@@ -3,33 +3,46 @@
     <v-row no-gutters>
       <v-col cols="6" class="text-h5 font-weight-bold mb-0">Chart view</v-col>
       <v-col
-        cols="6"
+        cols="3"
         class="mb-0 text-right"
         @click="$router.push('/admin/reports')"
       >
-        <v-btn small fab dark><v-icon>mdi-chevron-left</v-icon></v-btn>
+        <v-btn x-small fab dark><v-icon>mdi-chevron-left</v-icon></v-btn>
         Choose new chart</v-col
       >
-      <v-col cols="12"
+      <v-col
+        cols="3"
+        class="mb-0 text-right"
+        @click="
+          $router.push('/admin/reports/data-selection/?chart=' + selectedChart)
+        "
+      >
+        <v-btn x-small fab dark><v-icon>mdi-chevron-left</v-icon></v-btn>
+        Choose new data</v-col
+      >
+      <v-col cols="12" class="mt-2"
         >Below is the options required to generate your
         <span class="font-weight-black">{{ chart }}</span> chart while you query
         against {{ chartData }}</v-col
       >
     </v-row>
-    <v-row v-if="renderGoals && getGoals && getGoals.length && !generatedChart">
-      <v-list-item-group v-model="goals" multiple active-class="">
-        <v-list-item v-for="goal in getGoals" :key="goal.id" :value="goal">
-          <template v-slot:default="{ active }">
-            <v-list-item-action>
-              <v-checkbox :input-value="active"></v-checkbox>
-            </v-list-item-action>
-
-            <v-list-item-content>
-              <v-list-item-title>{{ goal.title }}</v-list-item-title>
-            </v-list-item-content>
-          </template>
-        </v-list-item>
-      </v-list-item-group>
+    <v-row
+      v-if="
+        ((renderGoals && getGoals && getGoals.length) ||
+          (renderCategories && getGoalCategories && getGoalCategories.length) ||
+          (renderQuestions && getQuestions && getQuestions.length)) &&
+        !generatedChart
+      "
+    >
+      <GoalsTreeView
+        class="text-body-2"
+        :goals="getGoals"
+        :goal-categories="getGoalCategories"
+        :questions="getQuestions"
+        :display-goal-categories="renderCategories || renderQuestions"
+        :display-questions="renderQuestions"
+        @updateSelections="selections = $event"
+      />
       <v-bottom-navigation
         fixed
         horizontal
@@ -37,7 +50,8 @@
       >
         <div>
           <div class="font-weight-bold">
-            You have {{ goals ? goals.length : 0 }} goals selected
+            You have {{ selections ? selections.length : 0 }} {{ chartData }}
+            selected
           </div>
           <div class="text-caption">
             Please select a minimum of 2 to proceed
@@ -46,7 +60,7 @@
         <v-btn
           color="green"
           width="300px"
-          :disabled="!goals || goals.length < 2"
+          :disabled="!selections || selections.length < 2"
           @click="generateChart()"
         >
           <v-icon dark color="white" class="mr-0">mdi-chevron-right</v-icon>
@@ -66,6 +80,7 @@
 
 <script>
 import { dataMixin } from '../../../mixins/data.mixin'
+import GoalsTreeView from '../../../components/admin/Reports/GoalsTreeView'
 import chartType from '~/enums/chartType.enum'
 import barData from '~/enums/barData.enum'
 import lineData from '~/enums/lineData.enum'
@@ -76,8 +91,10 @@ import polarData from '~/enums/polarData.enum'
 
 export default {
   name: 'ChartView',
+  components: { GoalsTreeView },
   mixins: [dataMixin],
   data: () => ({
+    selections: null,
     generatedChart: null,
     goals: null,
     categories: null,
@@ -140,6 +157,10 @@ export default {
     },
     renderGoals() {
       return (
+        (+this.selectedChart === chartType.BAR &&
+          +this.selectedData === barData.GOAL) ||
+        (+this.selectedChart === chartType.LINE &&
+          +this.selectedData === lineData.GOAL) ||
         (+this.selectedChart === chartType.RADAR &&
           +this.selectedData === radarData.GOALS) ||
         (+this.selectedChart === chartType.DOUGHNUT &&
@@ -191,15 +212,45 @@ export default {
         )
       }
       if (this.renderGoals) {
-        if (!this.goals || this.goals.length < 2) return
-        if (this.goals && this.goals.length >= 2) {
-          console.log('dafuq')
+        if (!this.selections || this.selections.length < 2) return
+        if (this.selections && this.selections.length >= 2) {
           this.error = false
-          this.goals.forEach((goal) => {
+          this.selections.forEach((goal) => {
             const returnOutput = this.$data_service.GoalData(
               goal.key,
               this.getGoals,
               this.getGoalCategories,
+              this.getQuestions,
+              this.fetchMappedResponses
+            ).responseTypeTotals
+            output.push(returnOutput)
+          })
+        }
+      }
+
+      if (this.renderCategories) {
+        if (!this.selections || this.selections.length < 2) return
+        if (this.selections && this.selections.length >= 2) {
+          this.error = false
+          this.selections.forEach((category) => {
+            const returnOutput = this.$data_service.CategoryData(
+              category.key,
+              this.getGoalCategories,
+              this.getQuestions,
+              this.fetchMappedResponses
+            ).responseTypeTotals
+            output.push(returnOutput)
+          })
+        }
+      }
+
+      if (this.renderQuestions) {
+        if (!this.selections || this.selections.length < 2) return
+        if (this.selections && this.selections.length >= 2) {
+          this.error = false
+          this.selections.forEach((question) => {
+            const returnOutput = this.$data_service.QuestionData(
+              question.key,
               this.getQuestions,
               this.fetchMappedResponses
             ).responseTypeTotals

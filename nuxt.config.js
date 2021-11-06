@@ -35,6 +35,7 @@ export default {
     { src: '~/plugins/morris', ssr: false },
     { src: '~/plugins/underscore', ssr: false },
     { src: '~/plugins/gcharts', ssr: false },
+    { src: '~/plugins/webdatarocks.plugin', ssr: false },
     { src: '~/plugins/data.service.plugin', ssr: false },
     { src: '~/plugins/chart.service.plugin', ssr: false },
   ],
