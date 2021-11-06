@@ -8,7 +8,15 @@
           :key="selection.value"
           :value="selection"
           :color="color"
-          @change="captureResponse({ selection, questionId })"
+          @change="
+            captureResponse({
+              ...selection,
+              questionId,
+              question,
+              categoryId,
+              goalId,
+            })
+          "
         >
           <template v-slot:label>
             <div class="text-caption">
@@ -26,6 +34,8 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Question',
   props: {
+    goalId: { type: String, required: true, default: '' },
+    categoryId: { type: String, required: true, default: '' },
     question: { type: String, required: true, default: '' },
     questionId: { type: String, required: true, default: '' },
     color: { type: String, required: false, default: 'primary' },
@@ -44,14 +54,22 @@ export default {
   },
   created() {
     this.captureResponse({
-      selection: this.fetchPossibleSelections[0],
+      ...this.fetchPossibleSelections[this.getRandomInt(0, 5)],
       questionId: this.questionId,
+      question: this.question,
+      categoryId: this.categoryId,
+      goalId: this.goalId,
     })
   },
   methods: {
     ...mapActions({
       captureResponse: 'survey/captureResponse',
     }),
+    getRandomInt(min, max) {
+      min = Math.ceil(min)
+      max = Math.floor(max)
+      return Math.floor(Math.random() * (max - min)) + min
+    },
   },
 }
 </script>

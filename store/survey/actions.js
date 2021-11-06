@@ -8,11 +8,11 @@ export default {
         r.forEach((response) => {
           responses.push({
             key: response.key,
-            user: response.val()[0],
-            date: response.val()[1],
-            responses: response.val()[2],
+            user: response.val().user,
+            date: response.val().submission,
+            responses: response.val().responses,
           })
-          state.commit('MAP_RESPONSES', response.val()[2])
+          state.commit('MAP_RESPONSES', response.val().responses)
           return false
         })
         state.commit('SURVEY_RESPONSES', responses)
@@ -34,8 +34,9 @@ export default {
     const date = new Date().toLocaleDateString()
     const time = new Date().toLocaleTimeString()
     const submission = { date, time }
+    console.log({ user, submission, responses })
     try {
-      await messageRef.set([user, submission, responses]).then(
+      await messageRef.set({ user, submission, responses }).then(
         this.$alerts.showMessage({
           content: 'You have successfully completed the survey',
           color: 'success',

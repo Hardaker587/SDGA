@@ -18,5 +18,6 @@ module.exports = {
   // add your custom rules here
   rules: {
     camelcase: 'off',
+    'no-console': 'off',
   },
 }

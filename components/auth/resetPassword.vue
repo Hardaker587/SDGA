@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="500">
+  <v-dialog width="500">
     <template v-slot:activator="{ on, attrs }">
       <v-btn text color="primary" dark v-bind="attrs" v-on="on">
         Forgot password?

@@ -88,11 +88,11 @@
                     <v-col cols="7" class="font-weight-bold">Indicators</v-col>
                   </v-row>
                   <div
-                    class="mb-2"
                     v-for="(goalCategory, index) in getCategoriesForGoal(
                       goal.key
                     )"
                     :key="index"
+                    class="mb-2"
                   >
                     <div class="font-weight-bold">
                       {{ goalCategory.title }}
@@ -102,6 +102,8 @@
                         goalCategory.key
                       )"
                       :key="question.key"
+                      :goal-id="goal.key"
+                      :category-id="goalCategory.key"
                       :question="question.question"
                       :question-id="question.key"
                       :color="goal.color"

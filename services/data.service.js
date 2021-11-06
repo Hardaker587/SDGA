@@ -3,6 +3,9 @@ export class DataService {
     this.store = store
   }
 
+  ZipArrays(array1, array2) {
+    array1.map((x, i) => [x, array2[i]])
+  }
   // Note: need to create group services i.e return totals by goal, totals by category etc
 
   /**
@@ -80,15 +83,9 @@ export class DataService {
       gc.questions.forEach((gcq) => {
         gcq.responses = responses.filter((r) => r.questionId === gcq.key)
         gc.responses.push(...responses.filter((r) => r.questionId === gcq.key))
-        gcq.responseTypeTotals = this.NestedGroupBy(
-          gcq.responses,
-          'selection.value'
-        )
+        gcq.responseTypeTotals = this.NestedGroupBy(gcq.responses, 'value')
       })
-      gc.responseTypeTotals = this.NestedGroupBy(
-        gc.responses,
-        'selection.value'
-      )
+      gc.responseTypeTotals = this.NestedGroupBy(gc.responses, 'value')
     })
     /* Get questions for goal */
     const goalQuestions = questions.filter(
@@ -107,10 +104,7 @@ export class DataService {
       goalResponses.push(...questionResponses)
     })
     /* Generate group totals for response types */
-    let responseTypeTotals = this.NestedGroupBy(
-      goalResponses,
-      'selection.value'
-    )
+    let responseTypeTotals = this.NestedGroupBy(goalResponses, 'value')
     responseTypeTotals = Object.entries(responseTypeTotals).map(
       ([key, response]) => response.length
     )
@@ -120,6 +114,30 @@ export class DataService {
       categories: goalCategories,
       questions: goalQuestions,
       responses: goalResponses,
+      responseTypeTotals,
+    }
+  }
+
+  GoalDataV2(goalId, goals, responses, possibleResponses) {
+    /* Filter out the goal */
+    const goal = goals.find((goal) => goal.key === goalId)
+    /* Get responses for goal */
+    const goalResponses = responses.filter(
+      (response) => response.goalId === goalId
+    )
+    /* Generate group totals for response types */
+    let responseTypeTotals = this.NestedGroupBy(goalResponses, 'value')
+    console.log(1, responseTypeTotals)
+    responseTypeTotals = Object.entries(responseTypeTotals).map(
+      ([key, response]) => response.length
+    )
+    console.log(2, responseTypeTotals)
+    responseTypeTotals = this.ZipArrays(responseTypeTotals, possibleResponses)
+    console.log(3, responseTypeTotals)
+    return {
+      goalId,
+      goal,
+      goalResponses,
       responseTypeTotals,
     }
   }

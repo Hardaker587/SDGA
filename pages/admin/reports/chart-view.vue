@@ -207,7 +207,7 @@ export default {
       if (this.renderAllResponses) {
         output = this.$data_service.SelectionGroup(
           this.fetchMappedResponses,
-          'selection.text',
+          'text',
           true
         )
       }
@@ -216,11 +216,9 @@ export default {
         if (this.selections && this.selections.length >= 2) {
           this.error = false
           this.selections.forEach((goal) => {
-            const returnOutput = this.$data_service.GoalData(
+            const returnOutput = this.$data_service.GoalDataV2(
               goal.key,
               this.getGoals,
-              this.getGoalCategories,
-              this.getQuestions,
               this.fetchMappedResponses
             ).responseTypeTotals
             output.push(returnOutput)
@@ -237,7 +235,8 @@ export default {
               category.key,
               this.getGoalCategories,
               this.getQuestions,
-              this.fetchMappedResponses
+              this.fetchMappedResponses,
+              this.fetchPossibleSelections
             ).responseTypeTotals
             output.push(returnOutput)
           })
