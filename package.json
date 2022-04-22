@@ -17,7 +17,7 @@
     "@nuxtjs/pwa": "^3.0.2",
     "chart.js": "^3.5.0",
     "child_process": "^1.0.2",
-    "core-js": "^3.6.5",
+    "core-js": "^3.22.2",
     "firebase": "^8.0.1",
     "firebase-admin": "^9.4.1",
     "firebase-functions": "^3.11.0",
